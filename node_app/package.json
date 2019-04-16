@@ -6,6 +6,7 @@
         "dev": "concurrently \"npm run server\" \"npm run client\""
     },
     "dependencies": {
-        "concurrently": "^4.1.0"
+        "concurrently": "^4.1.0",
+        "mysql": "^2.16.0"
     }
 }
