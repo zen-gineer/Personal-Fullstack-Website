@@ -15,7 +15,7 @@ class Counter extends Component {
 	};
 
 	render() {
-    this.apiCall()
+    // this.apiCall()
 		return (
 			<React.Fragment>
 				<span className={this.getBadgeClasses()}>{this.formatCount()}</span>

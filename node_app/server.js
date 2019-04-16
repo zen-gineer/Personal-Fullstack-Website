@@ -24,6 +24,14 @@ app.get('/', (req, res) => {
 	res.send('Hello World');
 });
 
+app.get('/api/blogposts', (req, res) => {
+	let sql = 'SELECT * from posts';
+	db.query(sql, (err, results) => {
+		if (err) throw err;
+		res.json(results);
+	});
+});
+
 app.get('/adpost1', (req, res) => {
 	let post = { title: 'Post One', body: 'This is post number 1' };
 	let sql = 'INSERT INTO posts SET ?';
@@ -71,7 +79,5 @@ app.get('/api/health/:id', (req, res) => {
 	if (!healthId) return res.status(404).send('The given ID was not found');
 	res.send(healthId);
 });
-
-app.listen(3000, () => {
-	console.log('server started on port 3000');
-});
+const port = 5000;
+app.listen(port, () => `Server running on port ${port}`);
