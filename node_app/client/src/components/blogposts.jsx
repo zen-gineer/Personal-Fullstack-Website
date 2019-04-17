@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 
 class BlogPosts extends Component {
 	constructor() {
-		super();
+        super();
+        // this.toggle = this.toggle.bind(this);
 		this.state = {
 			posts: [],
-			titleCol: 'col-2',
-			bodyCol: 'col-6',
+			// titleCol: 'col-2',
+			// bodyCol: 'col-10',
 			buttonToggle: 'See Posts',
 		};
 	}
@@ -21,23 +22,25 @@ class BlogPosts extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				{this.Title()}
-				{this.Button()}
-				{this.Table()}
+				{/* {this.Title()} */}
+				{this.ButtonElement()}
+				{/* {this.Table()} */}
 			</React.Fragment>
 		);
 	}
 
-	Button() {
-		var buttonText = this.state.buttonToggle === 'See Posts' ? 'Create Post' : 'See Posts';
+	ButtonElement() {
+        console.log('Creating button')
+		var buttonText = this.setState((buttonToggle) => (buttonToggle === 'See Posts') ? 'Create Post' : 'See Posts');
 		return <button onClick={this.toggle()} className="btn btn-secondary">{buttonText}</button>;
     }
     
-    toggle(){
+    toggle () {
+        console.log('Button clicked')
         if (this.state.buttonToggle === "See Posts"){
-            this.state.buttonToggle = "Create Post"
+            this.setState({buttonToggle: "Create Post"})
         } else {
-            this.state.buttonToggle = "See Posts"
+            this.setState({buttonToggle: "See Posts"})
         }
         console.log(this.state.buttonToggle)
     }
@@ -45,7 +48,7 @@ class BlogPosts extends Component {
 	Table() {
 		return (
 			<div className="row container">
-				<table className="table col-12">
+				<table className="table">
 					<thead>
 						<tr>
 							<th className={this.state.titleCol}>Title</th>

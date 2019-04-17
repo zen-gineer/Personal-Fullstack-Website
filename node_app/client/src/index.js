@@ -11,7 +11,7 @@ import BlogPosts from './components/blogposts';
 import NewEntry from './components/newEntry';
 
 const component = (
-	<React.Fragment className="container">
+	<React.Fragment>
 		<div className="row">
 			<NewEntry />
 		</div>
