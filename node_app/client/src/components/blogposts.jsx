@@ -6,6 +6,9 @@ class BlogPosts extends Component {
 		super();
 		this.state = {
 			posts: [],
+			titleCol: 'col-2',
+			bodyCol: 'col-6',
+			buttonToggle: 'See Posts',
 		};
 	}
 
@@ -14,27 +17,59 @@ class BlogPosts extends Component {
 			.then(res => res.json())
 			.then(posts => this.setState({ posts }, () => console.log('Posts fetched', posts)));
 	}
+
 	render() {
 		return (
 			<React.Fragment>
-				<h2>Blog Posts</h2>
-				<table>
+				{this.Title()}
+				{this.Button()}
+				{this.Table()}
+			</React.Fragment>
+		);
+	}
+
+	Button() {
+		var buttonText = this.state.buttonToggle === 'See Posts' ? 'Create Post' : 'See Posts';
+		return <button onClick={this.toggle()} className="btn btn-secondary">{buttonText}</button>;
+    }
+    
+    toggle(){
+        if (this.state.buttonToggle === "See Posts"){
+            this.state.buttonToggle = "Create Post"
+        } else {
+            this.state.buttonToggle = "See Posts"
+        }
+        console.log(this.state.buttonToggle)
+    }
+
+	Table() {
+		return (
+			<div className="row container">
+				<table className="table col-12">
 					<thead>
 						<tr>
-							<th>Title</th>
-							<th>Body</th>
+							<th className={this.state.titleCol}>Title</th>
+							<th className={this.state.bodyCol}>Body</th>
 						</tr>
 					</thead>
 					<tbody>
 						{this.state.posts.map(post => (
 							<tr key={post.id}>
-								<td>{post.title}</td>
-								<td>{post.body}</td>
+								<td className={this.state.titleCol}>{post.title}</td>
+								<td className={this.state.bodyCol}>{post.body}</td>
 							</tr>
 						))}
 					</tbody>
 				</table>
-			</React.Fragment>
+			</div>
+		);
+	}
+
+	Title() {
+		return (
+			<div className="row col-md-12 jumbotron">
+				<h2>Blog Posts</h2>
+			</div>
 		);
 	}
 }
