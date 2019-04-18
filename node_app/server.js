@@ -1,10 +1,22 @@
-var healthData = require('./health.json');
+var cors = require('cors');
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
+var bodyParser = require('body-parser');
 //start server: npm run dev
 //example id 00000000-0000-0000-360E-3892501AB14E
 //root@localhost: O>>2B3eEwpEZ MySQLPass12!
+
+app.use(express.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+// app.use(function(req, res, next) {
+// 	res.header("Access-Control-Allow-Origin", "*");
+// 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+// 	next();
+//   });
+
+app.use(cors());
 
 const db = mysql.createConnection({
 	host: 'localhost',
@@ -18,6 +30,16 @@ db.connect(err => {
 		console.log(err);
 	}
 	console.log('mysql connected');
+});
+
+app.post('/api/newblogpost', (req, res) => {
+	var body = req.body;
+	let sql = `INSERT INTO posts(title, body) VALUES (\"${body.title}\", \"${body.body}\")`;
+	console.log(sql);
+	db.query(sql, (err, results) => {
+		if (err) throw err;
+	});
+	res.json("Posted to database");
 });
 
 app.get('/', (req, res) => {
@@ -64,20 +86,5 @@ app.get('/createdb', (req, res) => {
 	res.send('Hello World');
 });
 
-app.get('/api/health', (req, res) => {
-	res.send(healthData);
-});
-
-app.get('/api/health/:id', (req, res) => {
-	var healthId = {};
-	healthData['data'].forEach(element => {
-		console.log(element[1]);
-		if (element[1] === req.params.id) {
-			healthId = element;
-		}
-	});
-	if (!healthId) return res.status(404).send('The given ID was not found');
-	res.send(healthId);
-});
 const port = 5000;
 app.listen(port, () => `Server running on port ${port}`);

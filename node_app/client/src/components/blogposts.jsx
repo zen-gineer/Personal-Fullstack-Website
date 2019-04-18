@@ -3,13 +3,19 @@ import React, { Component } from 'react';
 
 class BlogPosts extends Component {
 	constructor() {
-        super();
-        // this.toggle = this.toggle.bind(this);
+		super();
+		this.toggle = this.toggle.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleTitleChange = this.handleTitleChange.bind(this);
+		this.handleBodyChange = this.handleBodyChange.bind(this);
+
 		this.state = {
 			posts: [],
 			// titleCol: 'col-2',
 			// bodyCol: 'col-10',
 			buttonToggle: 'See Posts',
+			title: '',
+			body: '',
 		};
 	}
 
@@ -22,28 +28,84 @@ class BlogPosts extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				{/* {this.Title()} */}
-				{this.ButtonElement()}
-				{/* {this.Table()} */}
+				{this.Title()}
+				{this.PostGetButton()}
+				{this.state.buttonToggle === 'Create Post' ? this.Table() : this.CreatePost()}
 			</React.Fragment>
 		);
 	}
 
-	ButtonElement() {
-        console.log('Creating button')
-		var buttonText = this.setState((buttonToggle) => (buttonToggle === 'See Posts') ? 'Create Post' : 'See Posts');
-		return <button onClick={this.toggle()} className="btn btn-secondary">{buttonText}</button>;
-    }
-    
-    toggle () {
-        console.log('Button clicked')
-        if (this.state.buttonToggle === "See Posts"){
-            this.setState({buttonToggle: "Create Post"})
-        } else {
-            this.setState({buttonToggle: "See Posts"})
-        }
-        console.log(this.state.buttonToggle)
-    }
+	handleTitleChange(event) {
+		this.setState({ title: event.target.value });
+		// console.log(this.state.title)
+		event.preventDefault();
+	}
+
+	handleBodyChange(event) {
+		this.setState({ body: event.target.value });
+		// console.log(this.state.body)
+		event.preventDefault();
+	}
+
+	handleSubmit(event) {
+		console.log('submitted');
+		event.preventDefault();
+		// console.log(this);
+		let newPost = { title: this.state.title, body: this.state.body };
+		let settings = {
+			async: true,
+			crossDomain: true,
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'cache-control': 'no-cache',
+			},
+			processData: false,
+			body: JSON.stringify(newPost),
+		};
+		let url = '/api/newblogpost';
+        fetch(url, settings)
+        .then(res => res.json())
+		.then(data => console.log(data));
+		this.setState({buttonToggle: "Create Posts"})
+	}
+
+	CreatePost() {
+		return (
+			<div>
+				<form onSubmit={this.handleSubmit}>
+					<label>
+						Title
+						<input name="title" type="text" value={this.state.title} onChange={this.handleTitleChange} />
+						<input type="submit" value="Submit" />
+					</label>
+					<br />
+					<label>
+						Body
+						<textarea name="body" type="text" checked={this.state.body} onChange={this.handleBodyChange} />
+					</label>
+				</form>
+			</div>
+		);
+	}
+
+	PostGetButton() {
+		return (
+			<button onClick={this.toggle} className="btn btn-secondary">
+				{this.state.buttonToggle}
+			</button>
+		);
+	}
+
+	toggle() {
+		this.setState(state => {
+			return { buttonToggle: state.buttonToggle === 'Create Post' ? 'See Posts' : 'Create Post' };
+		});
+		if (this.state.buttonToggle === 'Create Post') {
+			this.componentDidMount();
+		}
+		console.log(this.state.buttonToggle);
+	}
 
 	Table() {
 		return (

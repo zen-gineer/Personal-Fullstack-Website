@@ -8,20 +8,20 @@ import 'jquery/dist/jquery';
 import * as serviceWorker from './serviceWorker';
 // import registerServiceWorker from './registerServiceWorker';
 import BlogPosts from './components/blogposts';
-import NewEntry from './components/newEntry';
+// import NewEntry from './components/newEntry';
 
-const component = (
-	<React.Fragment>
-		<div className="row">
-			<NewEntry />
-		</div>
-		<div className="row">
-			<BlogPosts />
-		</div>
-	</React.Fragment>
-);
+// const component = (
+// 	<React.Fragment>
+// 		{/* <div className="row">
+// 			<NewEntry />
+// 		</div> */}
+// 		<div className="row">
+// 			<BlogPosts />
+// 		</div>
+// 	</React.Fragment>
+// );
 
-ReactDOM.render(component, document.getElementById('root'));
+ReactDOM.render(<BlogPosts/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
