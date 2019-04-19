@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 var bodyParser = require('body-parser');
+const mysqlpass = require( "../../sqlPass");
+
 //start server: npm run dev
 //example id 00000000-0000-0000-360E-3892501AB14E
 //root@localhost: O>>2B3eEwpEZ MySQLPass12!
@@ -17,11 +19,11 @@ app.use(express.json());
 //   });
 
 app.use(cors());
-
+console.log("mysqlpass",mysqlpass)
 const db = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: 'MySQLPass12!',
+	password: mysqlpass,
 	database: 'nodemysql',
 });
 
