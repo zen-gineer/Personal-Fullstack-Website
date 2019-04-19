@@ -64,10 +64,25 @@ class BlogPosts extends Component {
 			body: JSON.stringify(newPost),
 		};
 		let url = '/api/newblogpost';
-        fetch(url, settings)
-        .then(res => res.json())
-		.then(data => console.log(data));
-		this.setState({buttonToggle: "Create Posts"})
+		fetch(url, settings)
+			.then(res => res.json())
+			.then(data => console.log(data));
+		this.waitToToggle();
+		
+	}
+
+	resolveAfter2Seconds(x) {
+		return new Promise(resolve => {
+			setTimeout(() => {
+				resolve(x);
+			}, 2000);
+		});
+	}
+
+	async waitToToggle() {
+		var x = await this.resolveAfter2Seconds(1000);
+		console.log(x); // 10
+		this.toggle();
 	}
 
 	CreatePost() {
@@ -77,7 +92,7 @@ class BlogPosts extends Component {
 					<label>
 						Title
 						<input name="title" type="text" value={this.state.title} onChange={this.handleTitleChange} />
-						<input type="submit" value="Submit" />
+						<input name="submitPost" type="submit" value="Submit" />
 					</label>
 					<br />
 					<label>

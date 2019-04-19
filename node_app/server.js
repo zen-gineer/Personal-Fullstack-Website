@@ -38,8 +38,9 @@ app.post('/api/newblogpost', (req, res) => {
 	console.log(sql);
 	db.query(sql, (err, results) => {
 		if (err) throw err;
+		res.json("Posted to database");
 	});
-	res.json("Posted to database");
+	
 });
 
 app.get('/', (req, res) => {
