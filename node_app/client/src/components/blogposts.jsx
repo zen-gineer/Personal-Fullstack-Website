@@ -37,13 +37,13 @@ class BlogPosts extends Component {
 
 	handleTitleChange(event) {
 		this.setState({ title: event.target.value });
-		// console.log(this.state.title)
+		console.log(this.state.title)
 		event.preventDefault();
 	}
 
 	handleBodyChange(event) {
 		this.setState({ body: event.target.value });
-		// console.log(this.state.body)
+		console.log(this.state.body)
 		event.preventDefault();
 	}
 

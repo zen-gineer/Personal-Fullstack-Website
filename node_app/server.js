@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 var bodyParser = require('body-parser');
-const mysqlpass = require( "../../sqlPass");
+const mysqlpass = require( "../sqlPass");
 
 //start server: npm run dev
 //example id 00000000-0000-0000-360E-3892501AB14E
