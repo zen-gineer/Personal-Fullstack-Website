@@ -27,23 +27,24 @@ class BlogPosts extends Component {
 
 	render() {
 		return (
-			<React.Fragment>
+			<div className="blog jumbotron">
 				{this.Title()}
+				{this.Description()}
 				{this.PostGetButton()}
 				{this.state.buttonToggle === 'Create Post' ? this.Table() : this.CreatePost()}
-			</React.Fragment>
+			</div>
 		);
 	}
 
 	handleTitleChange(event) {
 		this.setState({ title: event.target.value });
-		console.log(this.state.title)
+		console.log(this.state.title);
 		event.preventDefault();
 	}
 
 	handleBodyChange(event) {
 		this.setState({ body: event.target.value });
-		console.log(this.state.body)
+		console.log(this.state.body);
 		event.preventDefault();
 	}
 
@@ -68,7 +69,6 @@ class BlogPosts extends Component {
 			.then(res => res.json())
 			.then(data => console.log(data));
 		this.waitToToggle();
-		
 	}
 
 	resolveAfter2Seconds(x) {
@@ -88,16 +88,28 @@ class BlogPosts extends Component {
 	CreatePost() {
 		return (
 			<div>
-				<form onSubmit={this.handleSubmit}>
-					<label>
-						Title
-						<input name="title" type="text" value={this.state.title} onChange={this.handleTitleChange} />
-						<input name="submitPost" type="submit" value="Submit" />
+				<form className="blog-form" onSubmit={this.handleSubmit}>
+					<label className="blog-title">
+						Title<br />
+						<input
+							className="col-8-sm"
+							name="title"
+							type="text"
+							value={this.state.title}
+							onChange={this.handleTitleChange}
+						/>
+						<input className="col-4-sm" name="submitPost" type="submit" value="Submit" />
 					</label>
 					<br />
-					<label>
-						Body
-						<textarea name="body" type="text" checked={this.state.body} onChange={this.handleBodyChange} />
+					<label className="blog-body">
+						Body<br />
+						<textarea
+							className="blog-text-area"
+							name="body"
+							type="text"
+							checked={this.state.body}
+							onChange={this.handleBodyChange}
+						/>
 					</label>
 				</form>
 			</div>
@@ -147,8 +159,18 @@ class BlogPosts extends Component {
 
 	Title() {
 		return (
-			<div className="row col-md-12 jumbotron">
+			<div className="section-title">
 				<h2>Blog Posts</h2>
+			</div>
+		);
+	}
+
+	Description() {
+		return (
+			<div className="blog-description">
+				<p />
+				This blog was meant to practice front-end / back-end developement. As well as communication with a sql
+				database. It is functional and will take your thoughts and save them for later in a post.
 			</div>
 		);
 	}

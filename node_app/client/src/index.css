@@ -18,3 +18,57 @@ code {
 .container {
   margin: 100;
 }
+
+.blog {
+  width: 80%;
+  background-color: rgb(217, 219, 213);
+  border: 10px rgb(117, 116, 114) solid;
+  padding-top:20px;
+  margin:auto;
+  margin-top: 10px;
+  /* height: 80%; */
+}
+
+.blog-body {
+  margin:0;
+  width:100%;
+  /* margin-top:20px */
+  padding:0;
+  /* height: 100px; */
+}
+
+.blog-title {
+  margin:auto;
+  width: 80%;
+  /* margin:20px */
+}
+
+.section-title {
+  margin:0px;
+  padding: 0px;
+}
+
+.blog-description {
+  margin:0px;
+  padding-bottom: 10px;
+}
+
+.blog-text-area {
+  width:80%;
+  /* height: 200px */
+}
+
+.blog-form {
+  width:100%;
+  padding: 0;
+  margin: 0;
+  margin-left:0;
+  margin-right:0
+}
+
+.blog-title-input {
+  width:60%
+}
+.blog-title-button {
+  width:60%
+}

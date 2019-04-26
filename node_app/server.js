@@ -1,10 +1,10 @@
-var cors = require('cors');
+// var cors = require('cors');
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
 var bodyParser = require('body-parser');
-const mysqlpass = require( "../sqlPass");
-
+const mysqlpass = require( "./sqlPass");
+// console.log(mysqlpass)
 //start server: npm run dev
 //example id 00000000-0000-0000-360E-3892501AB14E
 //root@localhost: O>>2B3eEwpEZ MySQLPass12!
@@ -18,7 +18,7 @@ app.use(express.json());
 // 	next();
 //   });
 
-app.use(cors());
+// app.use(cors());
 console.log("mysqlpass",mysqlpass)
 const db = mysql.createConnection({
 	host: 'localhost',

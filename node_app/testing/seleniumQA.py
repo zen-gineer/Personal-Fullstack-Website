@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time, random
 
+# robot framework
+
 class BlogTest(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(BlogTest, self).__init__(*args, **kwargs)
@@ -43,6 +45,9 @@ class BlogTest(unittest.TestCase):
         words = words.split()
         start = random.randint(1,len(words) - numWords)
         return ' '.join(words[start:start+numWords])
+
+    def chaseCalmSignin(self):
+        self.driver.get("https://www.calm.com/")
 
 
 if __name__ == "__main__":
