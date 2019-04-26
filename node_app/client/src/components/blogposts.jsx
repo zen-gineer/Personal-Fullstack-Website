@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+// import { Button, View, Text } from 'react-native';
+// var reactNavBar = require('react-nav-bar');
+// var NavBar = reactNavBar.NavBar;
+// var Menu = reactNavBar.Menu;
+// import { createStackNavigator, createAppContainer } from 'react-navigation'; // 
 // import Request from 'superagent';
 
 class BlogPosts extends Component {
@@ -11,13 +16,15 @@ class BlogPosts extends Component {
 
 		this.state = {
 			posts: [],
-			// titleCol: 'col-2',
-			// bodyCol: 'col-10',
 			buttonToggle: 'See Posts',
 			title: '',
 			body: '',
 		};
 	}
+
+	// static navigationOptions = {
+	// 	title: 'Blog',
+	// };
 
 	componentDidMount() {
 		fetch('/api/blogposts')
@@ -90,7 +97,8 @@ class BlogPosts extends Component {
 			<div>
 				<form className="blog-form" onSubmit={this.handleSubmit}>
 					<label className="blog-title">
-						Title<br />
+						Title
+						<br />
 						<input
 							className="col-8-sm"
 							name="title"
@@ -102,7 +110,8 @@ class BlogPosts extends Component {
 					</label>
 					<br />
 					<label className="blog-body">
-						Body<br />
+						Body
+						<br />
 						<textarea
 							className="blog-text-area"
 							name="body"
