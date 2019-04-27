@@ -31,18 +31,18 @@ class NavBar extends Component {
 		return (
 			<div>
 				<Navbar color="light" light expand="md">
-					<NavbarBrand href="/">reactstrap</NavbarBrand>
+					<NavbarBrand href="/">zen-gineer</NavbarBrand>
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.isOpen} navbar>
 						<Nav className="ml-auto" navbar>
 							<NavItem>
-								<NavLink href="/Blog/" onClick={console.log("hi",this)}>Blog</NavLink>
+								<NavLink href="/Blog/" onClick={console.log("navblog",this)}>Blog</NavLink>
 							</NavItem>
                             <NavItem>
-								<NavLink href="/NewEntry/" onClick={console.log("hi",this)}>NewEntry</NavLink>
+								<NavLink href="/GitRepo/" onClick={console.log("navbar",this)}>GitRepo</NavLink>
 							</NavItem>
-							<NavItem>
-								<NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                            <NavItem>
+								<NavLink href="/ml/" onClick={console.log("navml",this)}>Machine Learning</NavLink>
 							</NavItem>
 							<UncontrolledDropdown nav inNavbar>
 								<DropdownToggle nav caret>

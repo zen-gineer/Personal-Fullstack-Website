@@ -3,22 +3,24 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'jquery/dist/jquery';
-import { Route, Switch, Redirect, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 // import registerServiceWorker from './registerServiceWorker';
 import BlogPosts from './components/blogposts';
-import NewEntry from './components/newEntry';
+import GitRepo from './components/gitrepos';
 import NavBar from './components/navbar';
+import ML from './components/ml';
 
-// console.log(newnave)
+
 var All = (
 	<div>
 		<NavBar />
 		<Router>
 			<Switch>
 				<Route exact path="/Blog" component={BlogPosts} />
-				<Route exact path="/NewEntry" component={NewEntry} />
+				<Route exact path="/GitRepo" component={GitRepo} />
+                <Route exact path="/ml" component={ML} />
 			</Switch>
 		</Router>
 	</div>

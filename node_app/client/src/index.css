@@ -72,3 +72,25 @@ code {
 .blog-title-button {
   width:60%
 }
+
+.ml-image {
+  width: 100%;
+  margin: auto
+}
+
+.log-button {
+  width:200px;
+  height: 40px;
+  border-color: black;
+  border-width: 20px;
+}
+
+.ml-navbar {
+  width:100%
+}
+
+.log-plot {
+  border-color: black;
+  border-width: 10px;
+  padding-top: 10px;
+}

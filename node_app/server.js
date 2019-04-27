@@ -3,27 +3,20 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 var bodyParser = require('body-parser');
-const mysqlpass = require( "./sqlPass");
-// console.log(mysqlpass)
-//start server: npm run dev
-//example id 00000000-0000-0000-360E-3892501AB14E
-//root@localhost: O>>2B3eEwpEZ MySQLPass12!
+const sqlpass = require('./sqlpass');
+const Twitter = require('twitter');
+const consumer_key = require('./consumer_key');
+const consumer_secret = require('./consumer_secret');
+const access_token_key = require('./access_token_key');
+const access_token_secret = require('./access_token_secret');
+const spawn = require('child_process').spawn;
 
 app.use(express.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
-// app.use(function(req, res, next) {
-// 	res.header("Access-Control-Allow-Origin", "*");
-// 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-// 	next();
-//   });
 
-// app.use(cors());
-console.log("mysqlpass",mysqlpass)
 const db = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: mysqlpass,
+	password: sqlpass,
 	database: 'nodemysql',
 });
 
@@ -40,13 +33,44 @@ app.post('/api/newblogpost', (req, res) => {
 	console.log(sql);
 	db.query(sql, (err, results) => {
 		if (err) throw err;
-		res.json("Posted to database");
+		res.json('Posted to database');
 	});
-	
 });
 
-app.get('/', (req, res) => {
-	res.send('Hello World');
+app.post('/api/mllog', (req, res) => {
+	var body = req.body;
+	const ls = spawn('python', ['./python/logReg.py', body.data]);
+	ls.stdout.on('data', (data) => {
+		console.log(`stdout: ${data}`);
+	  });
+	  
+	  ls.stderr.on('data', (data) => {
+		console.log(`stderr: ${data}`);
+	  });
+	  
+	  ls.on('close', (code) => {
+		console.log(`child process exited with code ${code}`);
+	  });
+	res.send(body);
+});
+
+app.get('/api/twitter', (req, res) => {
+	console.log('twitter api called');
+	const client = new Twitter({
+		consumer_key: consumer_key,
+		consumer_secret: consumer_secret,
+		access_token_key: access_token_key,
+		access_token_secret: access_token_secret,
+	});
+	var params = { screen_name: 'nodejs' };
+	client.get('https://api.twitter.com/1.1/statuses/user_timeline', params, function(error, tweets, response) {
+		if (!error) {
+			console.log(tweets);
+		} else {
+			console.log(error)
+		}
+		res.json('Hello World');
+	});
 });
 
 app.get('/api/blogposts', (req, res) => {
