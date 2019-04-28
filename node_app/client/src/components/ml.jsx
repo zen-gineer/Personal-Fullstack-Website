@@ -3,6 +3,7 @@ import { XYPlot, XAxis, YAxis, MarkSeries, Hint, Borders } from 'react-vis';
 import React, { Component } from 'react';
 // import image1 from '../images/ml.png';
 import cert from '../images/Coursera_3RLZA3C7PQTX.png';
+import bcert from "../images/berkeley.jpg";
 import logGraph from './LogisticRegression.jsx';
 // const keys = require('../keys');
 // const Twitter = require('twitter');
@@ -41,7 +42,7 @@ class ML extends Component {
 			<div className="blog jumbotron">
 				{this.Nav()}
 				{/* {this.Projects()} */}
-				{this.Description()}
+				{/* {this.Description()} */}
 				{this.Content()}
 			</div>
 		);
@@ -60,7 +61,12 @@ class ML extends Component {
 		switch (this.state.content) {
 			case 'Certificates':
 				// console.log(this.state);
-				return <img className="ml-image" src={cert} />;
+				return (
+					<div>
+						<img className="ml-image-2" src={bcert} />
+						<img className="ml-image" src={cert} />
+					</div>
+				);
 			case 'Projects':
 				// console.log('projects', this.state);
 				return this.Projects();
@@ -128,7 +134,7 @@ class ML extends Component {
 			},
 		};
 		return (
-			<div>
+			<div className="log-plot-outer-div">
 				<button className="btn-sml btn log-button" onClick={this.CalculateLogCall}>
 					Run Logistic Regression
 				</button>

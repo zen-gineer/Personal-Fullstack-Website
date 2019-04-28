@@ -39,7 +39,8 @@ app.post('/api/newblogpost', (req, res) => {
 
 app.post('/api/mllog', (req, res) => {
 	var body = req.body;
-	const ls = spawn('python', ['./python/logReg.py', body.data]);
+	// console.log("node body string: ", body.toString())
+	const ls = spawn('python', ['./python/logReg.py', JSON.stringify(body)]);
 	ls.stdout.on('data', (data) => {
 		console.log(`stdout: ${data}`);
 	  });

@@ -77,8 +77,16 @@ code {
   width: 100%;
   margin: auto
 }
+.ml-image-2 {
+  width: 100%;
+  margin:auto;
+  border-width: 20%;
+  border-color:rgba(153, 56, 56, 0.795);
+  /* padding: 2%; */
+}
 
 .log-button {
+  padding-top:20px;
   width:200px;
   height: 40px;
   border-color: black;
@@ -93,4 +101,11 @@ code {
   border-color: black;
   border-width: 10px;
   padding-top: 10px;
+}
+
+.log-plot-outer-div{
+  padding:20px;
+  border: 2px;
+  border-style: solid;
+  border-color: darkslategrey;
 }
