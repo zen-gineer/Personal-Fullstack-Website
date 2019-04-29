@@ -74,7 +74,7 @@ code {
 }
 
 .ml-image {
-  width: 100%;
+  width: 98%;
   margin: auto
 }
 .ml-image-2 {
@@ -101,11 +101,24 @@ code {
   border-color: black;
   border-width: 10px;
   padding-top: 10px;
+  width:50%;
+  margin:0px;
 }
 
 .log-plot-outer-div{
+  margin:auto;
+  width:100%;
   padding:20px;
   border: 2px;
   border-style: solid;
   border-color: darkslategrey;
+}
+
+.data-chart-description {
+  padding-top: 10px;
+  margin-bottom:0px;
+}
+
+.log-plot-setup-divs {
+  margin-left: 100px
 }

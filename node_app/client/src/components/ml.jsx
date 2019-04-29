@@ -1,10 +1,15 @@
 import { Collapse, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import Alert from 'react-bootstrap/Alert';
 import { XYPlot, XAxis, YAxis, MarkSeries, Hint, Borders } from 'react-vis';
 import React, { Component } from 'react';
 // import image1 from '../images/ml.png';
 import cert from '../images/Coursera_3RLZA3C7PQTX.png';
-import bcert from "../images/berkeley.jpg";
-import logGraph from './LogisticRegression.jsx';
+import bcert from '../images/berkeley.jpg';
+import model_diagram from '../images/model_diagram.png';
+// import logGraph from './LogisticRegression.jsx';
 // const keys = require('../keys');
 // const Twitter = require('twitter');
 
@@ -21,8 +26,21 @@ class ML extends Component {
 			isOpen: false,
 			value: null,
 			logData: [],
+			sklearnLogPredict: null,
+			CHART_MARGINS: { left: 50, right: 10, top: 10, bottom: 25 },
+			chartBorderStyle: {
+				bottom: { fill: '#fff' },
+				left: { fill: '#fff', opacity: 0.3 },
+				right: { fill: '#fff' },
+				top: { fill: '#fff' },
+			},
+			model: {
+				activation: 'relu',
+				hidden_nodes: 4,
+			},
 		};
 	}
+
 	componentDidMount() {
 		this.setState({ logData: this.GenerateValues() });
 	}
@@ -60,7 +78,6 @@ class ML extends Component {
 	Content() {
 		switch (this.state.content) {
 			case 'Certificates':
-				// console.log(this.state);
 				return (
 					<div>
 						<img className="ml-image-2" src={bcert} />
@@ -68,7 +85,7 @@ class ML extends Component {
 					</div>
 				);
 			case 'Projects':
-				// console.log('projects', this.state);
+				// console.log('logData', this.state.logData);
 				return this.Projects();
 		}
 	}
@@ -84,10 +101,7 @@ class ML extends Component {
 		// 	},
 		// 	OnMouseLeave: () => this.setState({ value: false })
 		// }); //
-		const graph = this.LogGraph();
-		// return <LogisticRegression/>
-
-		return graph;
+		return <div>{this.LogGraph()}</div>;
 	}
 
 	// ---------------------------------------
@@ -108,7 +122,16 @@ class ML extends Component {
 		let url = '/api/mllog';
 		fetch(url, settings)
 			.then(res => res.json())
-			.then(data => console.log(data));
+			.then(data => {
+				var jsonData = JSON.parse(
+					data.sklearnLogAscii
+						.replace(/'/g, '"')
+						.replace(/p/g, 'color')
+						.replace(/v/g, 'train_color')
+				);
+				this.setState({ sklearnLogPredict: jsonData });
+				// this.AddSklearnPredictGraph()
+			});
 	}
 
 	LogGraph() {
@@ -120,7 +143,6 @@ class ML extends Component {
 				train.blue.push({ x: value.x, y: value.y });
 			}
 		});
-		const CHART_MARGINS = { left: 50, right: 10, top: 10, bottom: 25 };
 		const markSeriesProps = {
 			animation: true,
 			className: 'mark-series-example',
@@ -129,35 +151,105 @@ class ML extends Component {
 			colorRange: ['#EFC1E3', '#59E4EC'],
 			opacityType: 'literal',
 			data: this.state.logData,
-			onNearestXY: (value, thing) => {
+			onNearestXY: value => {
 				return this.setState({ value });
 			},
 		};
+		const markSeriesSklearnProps = {
+			animation: true,
+			className: 'mark-series-example',
+			sizeRange: [5, 15],
+			seriesId: 'my-example-scatterplot',
+			colorRange: ['#EFC1E3', '#59E4EC'],
+			opacityType: 'literal',
+			data: this.state.sklearnLogPredict,
+			onNearestXY: value => {
+				return this.setState({ value });
+			},
+		};
+		// console.log('sklearnLogPlot: ', markSeriesSklearnProps);
 		return (
-			<div className="log-plot-outer-div">
-				<button className="btn-sml btn log-button" onClick={this.CalculateLogCall}>
+			<div className=" log-plot-outer-div">
+				<button className="log-plot-setup-divs row btn-sml btn log-button" onClick={this.CalculateLogCall}>
 					Run Logistic Regression
 				</button>
-				<XYPlot
-					className="log-plot"
-					width={300}
-					height={300}
-					margin={CHART_MARGINS}
-					onMouseLeave={() => this.setState({ value: false })}
-				>
-					<Borders
-						style={{
-							bottom: { fill: '#fff' },
-							left: { fill: '#fff', opacity: 0.3 },
-							right: { fill: '#fff' },
-							top: { fill: '#fff' },
-						}}
-					/>
-					<XAxis />
-					<YAxis />
-					<MarkSeries {...markSeriesProps} />
-					{this.state.value ? <Hint value={this.state.value} /> : null}
-				</XYPlot>
+				<div className="log-plot-setup-divs row">
+					<div className="log-plot cl-sm-6">
+						<XYPlot
+							width={250}
+							height={250}
+							margin={{ left: 50, right: 10, top: 10, bottom: 25 }}
+							onMouseLeave={() => this.setState({ value: false })}
+						>
+							<Borders style={this.state.ChartBorderStyle} />
+							<XAxis />
+							<YAxis />
+							<MarkSeries {...markSeriesProps} />
+							{this.state.value ? <Hint value={this.state.value} /> : null}
+						</XYPlot>
+					</div>
+					<div className="log-plot cl-sm-6">
+						<XYPlot
+							width={250}
+							height={250}
+							margin={this.state.CHART_MARGINS}
+							onMouseLeave={() => this.setState({ value: false })}
+						>
+							<Borders style={this.state.chartBorderStyle} />
+							<XAxis />
+							<YAxis />
+							{this.state.sklearnLogPredict ? <MarkSeries {...markSeriesSklearnProps} /> : null}
+							{this.state.value ? <Hint value={this.state.value} /> : null}
+						</XYPlot>
+					</div>
+				</div>
+				<div className="log-plot-setup-divs row">
+					<p className="data-chart-description col-sm-6">Randomly generated training data</p>
+					<p className="col-sm-6">
+						{this.state.sklearnLogPredict ? "Predicted colors from python's sklearn library" : ''}
+					</p>
+				</div>
+				{this.state.sklearnLogPredict ? this.MyLogReg() : null}
+			</div>
+		);
+	}
+
+	MyLogReg() {
+		return (
+			<div className="row">
+				{/* <Alert key="1" variant='primary'>
+					This is an alert with <Alert.Link href="#">an example link</Alert.Link>. Give it a click if
+					you like.
+				</Alert> */}
+
+				<ButtonToolbar>
+					{[
+						{ category: 'avtivation', options: ['relu', 'tanh'] },
+						{ category: 'hidden_nodes', options: [2, 4] },
+					].map(button => {
+						console.log('cat: ', button.category, 'options: ', button.options);
+						var category = button.category
+						return (
+							<DropdownButton
+								title={button.category}
+								variant="primary"
+								id={button.category}
+								key={button.category}
+								onClick={()=>this.setState({buttonClicked: button.category})}
+							>
+								{button.options.map(option => (
+									<Dropdown.Item eventKey={option} onSelect={(eventKey, event)=>{
+										console.log("eventKey: ",eventKey, "event: ",event);
+										this.setState({model: {category: eventKey}})
+										console.log("model: ", this.state.model)
+									}
+									}>{option}</Dropdown.Item>
+								))}
+							</DropdownButton>
+						);
+					})}
+				</ButtonToolbar>
+				<img className="ml-image" src={model_diagram} />
 			</div>
 		);
 	}
