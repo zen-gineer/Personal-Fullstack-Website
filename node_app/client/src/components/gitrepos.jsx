@@ -39,8 +39,19 @@ class GitRepo extends Component {
 	render() {
 		return (
 			<div className="github jumbotron">
+				{this.Title()}
 				{this.Description()}
 				{this.CreateRepoList()}
+			</div>
+		);
+	}
+
+	Title() {
+		return (
+			<div className="section-title">
+				<h2>
+					<font color="black">My Git Repositories</font>
+				</h2>
 			</div>
 		);
 	}
@@ -48,10 +59,12 @@ class GitRepo extends Component {
 	Description() {
 		return (
 			<div className="blog-description">
-				<h4><font color="black">Below is a list of my projects you can find on https://github.com/zen-gineer. And a short description of
-				each.</font></h4>
-				
-				
+				<p>
+					<font color="black">
+						<p>Find more at <a href='https://github.com/zen-gineer.'>https://github.com/zen-gineer.</a> </p>
+						<p><strong>Hover</strong> to see detailed descriptions.</p>
+					</font>
+				</p>
 			</div>
 		);
 	}
