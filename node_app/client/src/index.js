@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 import 'jquery/dist/jquery';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
@@ -11,19 +11,22 @@ import BlogPosts from './components/blogposts';
 import GitRepo from './components/gitrepos';
 import NavBar from './components/navbar';
 import ML from './components/ml';
-
+import Resume from './components/resume';
 
 var All = (
+
 	<div>
 		<NavBar />
 		<Router>
 			<Switch>
+				<Route exact path="/Resume" component={Resume} />
 				<Route exact path="/Blog" component={BlogPosts} />
 				<Route exact path="/GitRepo" component={GitRepo} />
-                <Route exact path="/ml" component={ML} />
+				<Route exact path="/ml" component={ML} />
 			</Switch>
 		</Router>
 	</div>
+
 );
 ReactDOM.render(All, document.getElementById('root'));
 

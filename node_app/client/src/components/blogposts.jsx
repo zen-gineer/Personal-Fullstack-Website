@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 // import { Button, View, Text } from 'react-native';
 // var reactNavBar = require('react-nav-bar');
 // var NavBar = reactNavBar.NavBar;

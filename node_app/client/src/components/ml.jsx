@@ -2,13 +2,16 @@ import { Collapse, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import Alert from 'react-bootstrap/Alert';
+// import Alert from 'react-bootstrap/Alert';
 import { XYPlot, XAxis, YAxis, MarkSeries, Hint, Borders } from 'react-vis';
+// import { useState } from 'react';
 import React, { Component } from 'react';
-// import image1 from '../images/ml.png';
+// import View from 'react-native';
+import ml_eq from '../images/functions.png';
 import cert from '../images/Coursera_3RLZA3C7PQTX.png';
 import bcert from '../images/berkeley.jpg';
-import model_diagram from '../images/model_diagram.png';
+// import model_diagram from '../images/model_diagram.png';
+// import update from 'react-addons-update'; // ES6
 // import logGraph from './LogisticRegression.jsx';
 // const keys = require('../keys');
 // const Twitter = require('twitter');
@@ -18,9 +21,10 @@ class ML extends Component {
 		super();
 		this.toggle = this.toggle.bind(this);
 		this.Trends = this.Trends.bind(this);
-		this.CalculateLogCall = this.CalculateLogCall.bind(this);
+		this.CalcSklearnLog = this.CalcSklearnLog.bind(this);
 		this._rememberValue = this._rememberValue.bind(this);
 		this.state = {
+			myInput: React.createRef(),
 			courseraCert: ['https://www.coursera.org/account/accomplishments/certificate/3RLZA3C7PQTX'],
 			content: 'Certificates',
 			isOpen: false,
@@ -42,6 +46,7 @@ class ML extends Component {
 	}
 
 	componentDidMount() {
+		console.log('componentDidMount ', this.state.myInput); //.current.offsetWidth);
 		this.setState({ logData: this.GenerateValues() });
 	}
 
@@ -60,7 +65,6 @@ class ML extends Component {
 			<div className="blog jumbotron">
 				{this.Nav()}
 				{/* {this.Projects()} */}
-				{/* {this.Description()} */}
 				{this.Content()}
 			</div>
 		);
@@ -69,8 +73,8 @@ class ML extends Component {
 	Description() {
 		return (
 			<div className="blog-description">
-				Machine Learning is a large field with many implimentations. Generally it's the process of learning from
-				datasets.
+				I'm going to run through interactive explinations and calculations of some machine learning fundamentals
+				I've learned. This, for my own solidification of knowledge, and for you, in case you are interested.
 			</div>
 		);
 	}
@@ -95,18 +99,27 @@ class ML extends Component {
 		// how do I deal with state values that need to be set and read from?
 		// const graph = logGraph({
 		// 	logData: this.state.logData,
-		// 	OnClick: this.CalculateLogCall(),
+		// 	OnClick: this.CalcSklearnLog(),
 		// 	onNearestXYFunc: (value, thing) => {
 		// 		return this.setState({ value });
 		// 	},
 		// 	OnMouseLeave: () => this.setState({ value: false })
 		// }); //
-		return <div>{this.LogGraph()}</div>;
+		return (
+			<div>
+				{this.Description()}
+				{this.LogGraph()}
+			</div>
+		);
 	}
 
 	// ---------------------------------------
 	// ---------------------------------------
-	CalculateLogCall() {
+	CalcSklearnLog() {
+		var sendData = {
+			task: 'sklearn',
+			logData: this.state.logData,
+		};
 		console.log('caluculate log called');
 		let settings = {
 			async: true,
@@ -117,7 +130,7 @@ class ML extends Component {
 				'cache-control': 'no-cache',
 			},
 			processData: false,
-			body: JSON.stringify(this.state.logData),
+			body: JSON.stringify(sendData),
 		};
 		let url = '/api/mllog';
 		fetch(url, settings)
@@ -147,7 +160,7 @@ class ML extends Component {
 			animation: true,
 			className: 'mark-series-example',
 			sizeRange: [5, 15],
-			seriesId: 'my-example-scatterplot',
+			seriesId: 'generated-scatter-plot',
 			colorRange: ['#EFC1E3', '#59E4EC'],
 			opacityType: 'literal',
 			data: this.state.logData,
@@ -157,7 +170,7 @@ class ML extends Component {
 		};
 		const markSeriesSklearnProps = {
 			animation: true,
-			className: 'mark-series-example',
+			className: 'sklearn-scatter-plot',
 			sizeRange: [5, 15],
 			seriesId: 'my-example-scatterplot',
 			colorRange: ['#EFC1E3', '#59E4EC'],
@@ -170,7 +183,7 @@ class ML extends Component {
 		// console.log('sklearnLogPlot: ', markSeriesSklearnProps);
 		return (
 			<div className=" log-plot-outer-div">
-				<button className="log-plot-setup-divs row btn-sml btn log-button" onClick={this.CalculateLogCall}>
+				<button className="log-plot-setup-divs row btn-sml btn log-button" onClick={this.CalcSklearnLog}>
 					Run Logistic Regression
 				</button>
 				<div className="log-plot-setup-divs row">
@@ -223,38 +236,133 @@ class ML extends Component {
 				</Alert> */}
 
 				<ButtonToolbar>
-					{[
-						{ category: 'avtivation', options: ['relu', 'tanh'] },
-						{ category: 'hidden_nodes', options: [2, 4] },
-					].map(button => {
-						console.log('cat: ', button.category, 'options: ', button.options);
-						var category = button.category
-						return (
-							<DropdownButton
-								title={button.category}
-								variant="primary"
-								id={button.category}
-								key={button.category}
-								onClick={()=>this.setState({buttonClicked: button.category})}
+					<DropdownButton
+						title={'activation (' + this.state.model.activation + ')'}
+						variant="primary"
+						id="activation"
+						key="activation"
+					>
+						{['relu', 'tanh'].map(option => (
+							<Dropdown.Item
+								eventKey={option}
+								onSelect={(eventKey, event) => {
+									console.log('eventKey: ', eventKey, 'event: ', event);
+									this.state.model.activation = eventKey;
+									this.forceUpdate();
+									console.log('model: ', this.state.model);
+								}}
 							>
-								{button.options.map(option => (
-									<Dropdown.Item eventKey={option} onSelect={(eventKey, event)=>{
-										console.log("eventKey: ",eventKey, "event: ",event);
-										this.setState({model: {category: eventKey}})
-										console.log("model: ", this.state.model)
-									}
-									}>{option}</Dropdown.Item>
-								))}
-							</DropdownButton>
-						);
-					})}
+								{option}
+							</Dropdown.Item>
+						))}
+					</DropdownButton>
+					<DropdownButton
+						title={'# nodes in hidden layer (' + this.state.model.hidden_nodes + ')'}
+						variant="primary"
+						id="hidden_nodes"
+						key="hidden_nodes"
+					>
+						{[2, 3, 4, 5, 6].map(option => (
+							<Dropdown.Item
+								eventKey={option}
+								onSelect={(eventKey, event) => {
+									console.log('eventKey: ', eventKey, 'event: ', event);
+									this.state.model.hidden_nodes = eventKey;
+									this.forceUpdate();
+									console.log('model: ', this.state.model);
+								}}
+							>
+								{option}
+							</Dropdown.Item>
+						))}
+					</DropdownButton>
+					<button className="log-plot-setup-divs row btn-sml btn log-button" onClick={this.CalcMyLog}>
+						Run Logistic Regression
+					</button>
 				</ButtonToolbar>
-				<img className="ml-image" src={model_diagram} />
+				<div className="row model-drawing">
+					<div className="col-sm-3 model-input-layer">
+						Input Layer
+						<div className="model-nodes" key="1">
+							x<sub>1</sub>
+						</div>
+						<div className="model-nodes" key="2">
+							x<sub>2</sub>
+						</div>
+					</div>
+					<div className="col-sm-3 model-hidden-layer">
+						Hidden Layer
+						<br />
+						{this.state.model.activation}
+						{this.DrawHiddenNodes()}
+					</div>
+					<div className="col-sm-3 model-output-layer">
+						Output Layer
+						<br />
+						sigmoid
+						<div className="model-nodes">Out</div>
+					</div>
+				</div>
+				<div className=" row ml-image-eq">
+					<img className="ml-image-eq" src={ml_eq} />
+				</div>
 			</div>
 		);
 	}
 
+	CalcMyLog() {
+		var sendData = {
+			task: 'myLog',
+			logData: this.state.logData,
+			model: this.state.model,
+		};
+		console.log('caluculate log called');
+		let settings = {
+			async: true,
+			crossDomain: true,
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'cache-control': 'no-cache',
+			},
+			processData: false,
+			body: JSON.stringify(sendData),
+		};
+		let url = '/api/mllog';
+		fetch(url, settings)
+			.then(res => res.json())
+			.then(data => {
+				console.log(data);
+				// var jsonData = JSON.parse(
+				// 	data.sklearnLogAscii
+				// 		.replace(/'/g, '"')
+				// 		.replace(/p/g, 'color')
+				// 		.replace(/v/g, 'train_color')
+				// );
+				// this.setState({ sklearnLogPredict: jsonData });
+				// this.AddSklearnPredictGraph()
+			});
+	}
+
+	DrawHiddenNodes() {
+		var views = [];
+		var i = 1;
+		for (i; i <= this.state.model.hidden_nodes; i++) {
+			views.push(
+				<div className="model-nodes">
+					{'a'}
+					<sub>{i}</sub>
+					<sup>[1]</sup>
+				</div>
+			);
+		}
+		return views;
+	}
+
 	GenerateValues() {
+		//100 datapoints, 2-d, r=a*sin(nTheta)
+
+		//x=r*cos(Theta), y=r*sin(Theta)
 		return Array(100)
 			.fill(0)
 			.map(x => ({

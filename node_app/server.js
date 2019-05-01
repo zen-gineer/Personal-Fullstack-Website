@@ -38,22 +38,47 @@ app.post('/api/newblogpost', (req, res) => {
 });
 
 app.post('/api/mllog', (req, res) => {
-	var body = req.body;
-	// console.log("node body string: ", body.toString())
+	var body = req.body; //console.log(body);
+	resData = { sklearnLogAscii: null, sklearnLogAccuracy: null };
+	
 	const ls = spawn('python', ['./python/logReg.py', JSON.stringify(body)]);
-	ls.stdout.on('data', (data) => {
-		console.log(`stdout: ${data}`);
-	  });
-	  
-	  ls.stderr.on('data', (data) => {
+	ls.stdout.on('data', data => {
+		str = data.toString();
+		console.log(str);
+		resData.sklearnLogAscii = GetSklearnPredict(str);
+		resData.sklearnLogAccuracy = GetSklearnAcc(str);
+		res.send(resData);
+	});
+
+	ls.stderr.on('data', data => {
 		console.log(`stderr: ${data}`);
-	  });
-	  
-	  ls.on('close', (code) => {
+	});
+
+	ls.on('close', code => {
 		console.log(`child process exited with code ${code}`);
-	  });
-	res.send(body);
+	});
+	// console.log(resData);
 });
+
+GetSklearnAcc = function(str){
+	var n = str.search(/Default sklearn log accuracy:/);
+	var m = str.slice(n,).search(/:/)+1;
+	var o = str.slice(n,).search(/%/);
+	return str.slice(n+m,n+o+1);
+
+}
+
+GetSklearnPredict = function(str) {
+	// console.log('function called', str);
+	var n = str.search(/sklearn log predictions:\s+\[/);
+	var m = str.slice(n).search(/\[/);
+	var o = str.slice(n).search(/\*/);
+	var myStr = str.slice(n + m, o + n);
+	// console.log("myStr: ", myStr)
+	// var sklearnLogRegAscii = [];
+	// for (var i = 0; i < myStr.length; i++) sklearnLogRegAscii.push(myStr.charCodeAt(i));
+	return myStr
+};
 
 app.get('/api/twitter', (req, res) => {
 	console.log('twitter api called');
@@ -68,7 +93,7 @@ app.get('/api/twitter', (req, res) => {
 		if (!error) {
 			console.log(tweets);
 		} else {
-			console.log(error)
+			console.log(error);
 		}
 		res.json('Hello World');
 	});
@@ -116,3 +141,4 @@ app.get('/createdb', (req, res) => {
 
 const port = 5000;
 app.listen(port, () => `Server running on port ${port}`);
+

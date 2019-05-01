@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-// import Request from 'superagent';
+import Popup from 'reactjs-popup';
+import marked from 'marked';
+import Markdown from 'markdown-to-jsx';
+// import ReactMarkdown from 'react-markdown';
 
 class GitRepo extends Component {
-	state = {
-		repos: [],
-	};
+	constructor() {
+		super();
+		this.state = {
+			repos: [],
+			readmes: {},
+		};
+	}
 	componentDidMount() {
 		let url = 'https://api.github.com/users/zen-gineer/repos';
 		fetch(url)
@@ -13,11 +20,29 @@ class GitRepo extends Component {
 				console.log('gitrepo');
 				this.setState({ repos: data });
 				console.log(this.state);
+				this.state.repos.map(repo => {
+					var readmepathstr = '../reporeadmes/' + repo.name + '.html'
+					
+					try {
+						const readmepath = require();
+						console.log(readmepath);
+						this.state.readmes[repo.name] = readmepath;
+						this.forceUpdate();
+						// fetch(readmepath)
+						// 	.then(res => res.text())
+						// 	.then(text => {
+						// 		this.state.readmes[repo.name] = text;
+						// 		this.forceUpdate();
+						// 		// console.log(text);
+						// 	});
+					} catch (err) {console.log("no ", repo.name, " readme file in ", readmepathstr)}
+				});
 			});
+			var thing = require('../reporeadmes/Dr-Seuss-Machine-Learning-LSTM.html');
+			console.log('thing',thing)
 	}
 
 	render() {
-		// this.CreateRepoList()
 		return (
 			<div className="blog jumbotron">
 				{this.Description()}
@@ -30,18 +55,42 @@ class GitRepo extends Component {
 		return (
 			<div className="blog-description">
 				<p />
-				Below is a list of my projects you can find on https://github.com/zen-gineer. And a short description of each.
+				Below is a list of my projects you can find on https://github.com/zen-gineer. And a short description of
+				each.
 			</div>
 		);
 	}
 
 	CreateRepoList() {
-		// console.log('createRepoList', this.state.repos);
+		console.log('createRepoList', this.state);
 		return (
-			<div>
-				{this.state.repos.map(repo => (
-					<li key={repo.name}><a href={repo.html_url}>{repo.name}</a></li>
-				))}
+			<div className="repo-list">
+				{this.state.repos.map(repo => {
+					console.log(this.state.readmes[repo.name]);
+					return this.state.readmes[repo.name] ? (
+						// var repoHtml = require('../reporeadmes/' + repo.name + '.html')
+						// console.log("repoHtml",repoHtml)
+						// return(
+							<li key={repo.name}>
+								<Popup
+									className="readme-popup"
+									trigger={<a href={repo.html_url}>{repo.name}</a>}
+									position="right center"
+									on="hover"
+								>
+								<embed src={require('../reporeadmes/' + repo.name + '.html')}/>
+									
+								</Popup>
+							</li>
+						// )
+							
+					 ) : (<li key={repo.name}>
+						<a href={repo.html_url}>{repo.name}</a>
+					</li>)
+						
+					})
+				};
+		)
 			</div>
 		);
 	}

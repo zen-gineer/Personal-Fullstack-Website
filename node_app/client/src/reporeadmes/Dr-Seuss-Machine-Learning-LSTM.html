@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)http://localhost:6419/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Dr-Seuss-Machine-Learning-LSTM.md - Grip</title>
+  <link rel="icon" href="http://localhost:6419/__/grip/static/favicon.ico">
+  <link rel="stylesheet" href="./Dr-Seuss-Machine-Learning-LSTM.md - Grip_files/github-d77687b19cac549d2cbe4c45e71e955a.css">
+  <link rel="stylesheet" href="./Dr-Seuss-Machine-Learning-LSTM.md - Grip_files/frameworks-f331a618befc2bf99be870c538f9ac95.css">
+  <link rel="stylesheet" href="./Dr-Seuss-Machine-Learning-LSTM.md - Grip_files/site-7d7d47ab5852bb08d1180249a6c36bf5.css">
+  <link rel="stylesheet" href="./Dr-Seuss-Machine-Learning-LSTM.md - Grip_files/octicons.css">
+  <style>
+    /* Page tweaks */
+    .preview-page {
+      margin-top: 64px;
+    }
+    /* User-content tweaks */
+    .timeline-comment-wrapper > .timeline-comment:after,
+    .timeline-comment-wrapper > .timeline-comment:before {
+      content: none;
+    }
+    /* User-content overrides */
+    .discussion-timeline.wide {
+      width: 920px;
+    }
+  </style>
+</head>
+<body style="">
+  <div class="page">
+    <div id="preview-page" class="preview-page" data-autorefresh-url="/__/grip/refresh/">
+
+    
+
+      <div role="main" class="main-content">
+        <div class="container new-discussion-timeline experiment-repo-nav">
+          <div class="repository-content">
+            <div id="readme" class="readme boxed-group clearfix announce instapaper_body md">
+              
+                <h3>
+                  <span class="octicon octicon-book"></span>
+                  Dr-Seuss-Machine-Learning-LSTM.md
+                </h3>
+              
+              <article class="markdown-body entry-content" itemprop="text" id="grip-content">
+                <h1>
+<a id="user-content-dr-suess-machine-learning-lstm" class="anchor" href="http://localhost:6419/#dr-suess-machine-learning-lstm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dr-Suess Machine Learning LSTM</h1>
+<p>This project focuses on using LSTM machine learning models to create Dr Seuss like stories from a user input seed.</p>
+<p><a href="https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/ModelLoss.PNG" target="_blank" rel="noopener noreferrer"><img src="./Dr-Seuss-Machine-Learning-LSTM.md - Grip_files/ModelLoss.PNG" alt="Graph of Model Loss per Epoch" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-understanding-lstm" class="anchor" href="http://localhost:6419/#understanding-lstm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Understanding LSTM</h2>
+<p><a href="https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/node/www/pages/2.png" target="_blank" rel="noopener noreferrer"><img src="./Dr-Seuss-Machine-Learning-LSTM.md - Grip_files/2.png" alt="" style="max-width:100%;"></a>
+<a href="https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/node/www/pages/3.png" target="_blank" rel="noopener noreferrer"><img src="./Dr-Seuss-Machine-Learning-LSTM.md - Grip_files/3.png" alt="" style="max-width:100%;"></a></p>
+<h2>
+<a id="user-content-getting-started" class="anchor" href="http://localhost:6419/#getting-started" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Getting Started</h2>
+<p>word_based.ipnb is our experimentation with word based LSTM models. This has the advantage of outputing only words that it has seen, and will therefore be more readable. However this makes for less training data availability than the character based model. Our character based model can be found in seuss.ipnb or seuss.py</p>
+<h3>
+<a id="user-content-prerequisites" class="anchor" href="http://localhost:6419/#prerequisites" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Prerequisites</h3>
+<p>The model is very big, and may require a dedicated GPU to run. AWS provides GPU's and can be experimented on with a free trial.
+You'll need:
+npm, flask, and sufficient hardware for model utilization, or training should you want to play with the model.</p>
+<h2>
+<a id="user-content-running-the-tests" class="anchor" href="http://localhost:6419/#running-the-tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running the tests</h2>
+<p>The parameters of this model creation code are easily manipulatable for experiementation. When the code runs it will save model information, as well as training loss, accuracy and model output data in a json file for visibilty. You can see previous output files in AlldataX.json</p>
+<h2>
+<a id="user-content-built-with" class="anchor" href="http://localhost:6419/#built-with" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Built With</h2>
+<ul>
+<li>[Dedicated GPU] (<a href="https://aws.amazon.com/ec2/instance-types/p3/" rel="nofollow">https://aws.amazon.com/ec2/instance-types/p3/</a>) - Or similar</li>
+</ul>
+<h2>
+<a id="user-content-authors" class="anchor" href="http://localhost:6419/#authors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors</h2>
+<ul>
+<li>
+<strong>Jennifer Shtaway</strong> - <em>Model Training, web developement, graphical representations of results</em>
+</li>
+</ul>
+<h2>
+<a id="user-content-acknowledgments" class="anchor" href="http://localhost:6419/#acknowledgments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Acknowledgments</h2>
+<ul>
+<li>Hat tip to my team, Vish, Greyson, and Alper who collaborated with me on this.</li>
+</ul>
+
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+  </div>
+  <div>&nbsp;</div>
+  </div><script>
+    function showCanonicalImages() {
+      var images = document.getElementsByTagName('img');
+      if (!images) {
+        return;
+      }
+      for (var index = 0; index < images.length; index++) {
+        var image = images[index];
+        if (image.getAttribute('data-canonical-src') && image.src !== image.getAttribute('data-canonical-src')) {
+          image.src = image.getAttribute('data-canonical-src');
+        }
+      }
+    }
+
+    function scrollToHash() {
+      if (location.hash && !document.querySelector(':target')) {
+        var element = document.getElementById('user-content-' + location.hash.slice(1));
+        if (element) {
+           element.scrollIntoView();
+        }
+      }
+    }
+
+    function autorefreshContent(eventSourceUrl) {
+      var initialTitle = document.title;
+      var contentElement = document.getElementById('grip-content');
+      var source = new EventSource(eventSourceUrl);
+      var isRendering = false;
+
+      source.onmessage = function(ev) {
+        var msg = JSON.parse(ev.data);
+        if (msg.updating) {
+          isRendering = true;
+          document.title = '(Rendering) ' + document.title;
+        } else {
+          isRendering = false;
+          document.title = initialTitle;
+          contentElement.innerHTML = msg.content;
+          showCanonicalImages();
+        }
+      }
+
+      source.onerror = function(e) {
+        if (e.readyState === EventSource.CLOSED && isRendering) {
+          isRendering = false;
+          document.title = initialTitle;
+        }
+      }
+    }
+
+    window.onhashchange = function() {
+      scrollToHash();
+    }
+
+    window.onload = function() {
+      scrollToHash();
+    }
+
+    showCanonicalImages();
+
+    var autorefreshUrl = document.getElementById('preview-page').getAttribute('data-autorefresh-url');
+    if (autorefreshUrl) {
+      autorefreshContent(autorefreshUrl);
+    }
+  </script>
+
+</body></html>

@@ -35,14 +35,17 @@ class NavBar extends Component {
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.isOpen} navbar>
 						<Nav className="ml-auto" navbar>
+						<NavItem>
+								<NavLink href="/resume/" >Resume</NavLink>
+							</NavItem>
 							<NavItem>
-								<NavLink href="/Blog/" onClick={console.log("navblog",this)}>Blog</NavLink>
+								<NavLink href="/Blog/" >Blog</NavLink>
 							</NavItem>
                             <NavItem>
-								<NavLink href="/GitRepo/" onClick={console.log("navbar",this)}>GitRepo</NavLink>
+								<NavLink href="/GitRepo/" >GitRepo</NavLink>
 							</NavItem>
                             <NavItem>
-								<NavLink href="/ml/" onClick={console.log("navml",this)}>Machine Learning</NavLink>
+								<NavLink href="/ml/" onClick={console.log("woohoo!",)}>Machine Learning</NavLink>
 							</NavItem>
 							<UncontrolledDropdown nav inNavbar>
 								<DropdownToggle nav caret>
