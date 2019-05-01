@@ -3,7 +3,7 @@
 
 ![Me](https://avatars2.githubusercontent.com/u/23371802?s=460&v=4)
 
-This personal website showcasing some skills and accomplishments I have. 
+This personal website is to showcase some skills and accomplishments I have, and to practice some new ones.
 It uses node/express backend with a mySQL database connection and React front end. This readme is available as a description of this website and how to use it. And will also show up as a pdf on the github repo page as popup description.
 
 ## Getting Started
