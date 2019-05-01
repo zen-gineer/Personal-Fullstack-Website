@@ -1,2 +1,6 @@
-mysqlPass.csv
-node_app/sqlPass.js
+node_app/sqlpass.js
+/Users/Jennifer/dev/node/FullStackPractice/node_app/client/src/keys.js
+node_app/access_token_secret.js
+node_app/access_token_key.js
+node_app/consumer_key.js
+node_app/consumer_secret.js
