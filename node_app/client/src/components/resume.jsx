@@ -8,8 +8,8 @@ class Resume extends Component {
 		return (
 			<embed
 				className=""
-				// src="https://resume.creddle.io/resume/27m4xt3l91n"
-				src="https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/README.md"
+				src="https://resume.creddle.io/resume/27m4xt3l91n"
+				// src="https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/README.md"
 				width="100%"
 				height="1100px"
 			/>

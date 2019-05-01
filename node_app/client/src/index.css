@@ -7,6 +7,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	/* width: 30%; */
 	margin: auto;
+	background-color: rgb(215, 215, 223)
 }
 
 code {
@@ -19,11 +20,26 @@ code {
 
 .blog {
 	width: 80%;
-	background-color: rgb(217, 219, 213);
+	/* background-color: #4c304e; */
+	background-color: rgb(222, 211, 223);
 	border: 10px rgb(117, 116, 114) solid;
 	padding-top: 20px;
 	margin: auto;
 	margin-top: 10px;
+	-webkit-text-stroke-color: aliceblue;
+	
+	/* height: 80%; */
+}
+
+.github {
+	width: 80%;
+	background-color: rgb(222, 211, 223);
+	border: 10px rgb(117, 116, 114) solid;
+	padding-top: 20px;
+	margin: auto;
+	margin-top: 10px;
+	-webkit-text-stroke-color: aliceblue;
+	
 	/* height: 80%; */
 }
 
@@ -51,6 +67,7 @@ code {
 	padding-bottom: 10px;
 	padding-top: 10px;
 }
+
 
 .blog-text-area {
 	width: 80%;

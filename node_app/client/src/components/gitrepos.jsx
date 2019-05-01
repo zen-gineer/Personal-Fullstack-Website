@@ -38,7 +38,7 @@ class GitRepo extends Component {
 
 	render() {
 		return (
-			<div className="blog jumbotron">
+			<div className="github jumbotron">
 				{this.Description()}
 				{this.CreateRepoList()}
 			</div>
@@ -48,16 +48,17 @@ class GitRepo extends Component {
 	Description() {
 		return (
 			<div className="blog-description">
-				<p />
-				Below is a list of my projects you can find on https://github.com/zen-gineer. And a short description of
-				each.
+				<h4><font color="black">Below is a list of my projects you can find on https://github.com/zen-gineer. And a short description of
+				each.</font></h4>
+				
+				
 			</div>
 		);
 	}
 
 	CreateRepoList() {
 		console.log('createRepoList', this.state);
-		const popupStyle = {width: "600px"}
+		const popupStyle = { width: '600px' };
 		return (
 			<div className="repo-list">
 				{this.state.repos.map(
@@ -93,7 +94,6 @@ class GitRepo extends Component {
 
 					//  ) : (
 				)}
-				)
 			</div>
 		);
 	}

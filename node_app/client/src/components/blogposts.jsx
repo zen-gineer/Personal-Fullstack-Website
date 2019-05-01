@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 // var reactNavBar = require('react-nav-bar');
 // var NavBar = reactNavBar.NavBar;
 // var Menu = reactNavBar.Menu;
-// import { createStackNavigator, createAppContainer } from 'react-navigation'; // 
+// import { createStackNavigator, createAppContainer } from 'react-navigation'; //
 // import Request from 'superagent';
 
 class BlogPosts extends Component {
@@ -170,7 +170,7 @@ class BlogPosts extends Component {
 	Title() {
 		return (
 			<div className="section-title">
-				<h2>Blog Posts</h2>
+				<h2><font color="black">Blog Posts</font></h2>
 			</div>
 		);
 	}
@@ -179,8 +179,10 @@ class BlogPosts extends Component {
 		return (
 			<div className="blog-description">
 				<p />
-				This blog was meant to practice front-end / back-end developement. As well as communication with a sql
-				database. It is functional and will take your thoughts and save them for later in a post.
+				<font color="black">
+					This blog was meant to practice front-end / back-end developement. As well as communication with a
+					sql database. It is functional and will take your thoughts and save them for later in a post.
+				</font>
 			</div>
 		);
 	}
