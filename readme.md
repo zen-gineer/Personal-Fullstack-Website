@@ -1,5 +1,5 @@
 # Full Stack Devlopement
-##How meta of you ;)
+## How meta of you ;)
 
 This personal website showcasing some skills and accomplishments uses node/express backend with a mySQL database connection and React front end. This readme is available as a description of this website and how to use it. And will also show up as a pdf on the github repo page as popup description.
 
@@ -10,7 +10,9 @@ Download the project and install the dependencies. After everything is installed
 ### Prerequisites
 
 MySQL, node, react. For more dependencies, check out the package.json files:
+
 ![Node package.json](https://github.com/zen-gineer/server-client-playground/blob/master/node_app/package.json)
+
 ![React (client) package.json](https://github.com/zen-gineer/server-client-playground/blob/master/node_app/client/package.json)
 
 
