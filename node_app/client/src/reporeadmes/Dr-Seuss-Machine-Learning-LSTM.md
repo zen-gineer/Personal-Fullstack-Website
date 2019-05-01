@@ -2,11 +2,10 @@
 
 This project focuses on using LSTM machine learning models to create Dr Seuss like stories from a user input seed.
 
-![Graph of Model Loss per Epoch](https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/ModelLoss.PNG)
-
 ## Understanding LSTM
 
 ![](https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/node/www/pages/2.png)
+
 ![](https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/node/www/pages/3.png)
 
 ## Getting Started
@@ -22,6 +21,8 @@ npm, flask, and sufficient hardware for model utilization, or training should yo
 ## Running the tests
 
 The parameters of this model creation code are easily manipulatable for experiementation. When the code runs it will save model information, as well as training loss, accuracy and model output data in a json file for visibilty. You can see previous output files in AlldataX.json
+
+![Graph of Model Loss per Epoch](https://github.com/zen-gineer/Dr-Seuss-Machine-Learning-LSTM/blob/master/ModelLoss.PNG)
 
 
 ## Built With
