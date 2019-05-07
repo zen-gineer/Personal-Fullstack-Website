@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Popup from 'reactjs-popup';
-import marked from 'marked';
-import Markdown from 'markdown-to-jsx';
+// import marked from 'marked';
+// import Markdown from 'markdown-to-jsx';
 // import ReactMarkdown from 'react-markdown';
 
 class GitRepo extends Component {
@@ -20,17 +20,6 @@ class GitRepo extends Component {
 				console.log('gitrepo');
 				this.setState({ repos: data });
 				console.log(this.state);
-				// this.state.repos.map(repo => {
-				// 	try {
-				// 		var readmepathstr = '../reporeadmes/' + repo.name + '.pdf'
-				// 		console.log(readmepathstr);
-				// 		var readmepath = require(readmepathstr);
-
-				// 		this.state.readmes[repo.name] = readmepath;
-				// 		this.forceUpdate();
-
-				// 	} catch (err) {console.log("no ", repo.name, " readme file in ", readmepathstr,err)}
-				// });
 			});
 		var thing = require('../reporeadmes/Dr-Seuss-Machine-Learning-LSTM.pdf');
 		console.log('thing', thing);
@@ -38,7 +27,7 @@ class GitRepo extends Component {
 
 	render() {
 		return (
-			<div className="github jumbotron">
+			<div className="blog jumbotron">
 				{this.Title()}
 				{this.Description()}
 				{this.CreateRepoList()}

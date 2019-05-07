@@ -2,12 +2,13 @@ import { Collapse, Navbar, Nav, NavItem, NavLink } from 'reactstrap';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import Popup from 'reactjs-popup';
 // import Alert from 'react-bootstrap/Alert';
 import { XYPlot, XAxis, YAxis, MarkSeries, Hint, Borders } from 'react-vis';
 // import { useState } from 'react';
 import React, { Component } from 'react';
 // import View from 'react-native';
-import ml_eq from '../images/functions.png';
+// import ml_eq from '../images/functions.png';
 import cert from '../images/Coursera_3RLZA3C7PQTX.png';
 import bcert from '../images/berkeley.jpg';
 // import model_diagram from '../images/model_diagram.png';
@@ -24,9 +25,10 @@ class ML extends Component {
 		this.CalcSklearnLog = this.CalcSklearnLog.bind(this);
 		this._rememberValue = this._rememberValue.bind(this);
 		this.state = {
+			navFontColor: 'white',
 			myInput: React.createRef(),
 			courseraCert: ['https://www.coursera.org/account/accomplishments/certificate/3RLZA3C7PQTX'],
-			content: 'Certificates',
+			content: 'Projects',
 			isOpen: false,
 			value: null,
 			logData: [],
@@ -62,7 +64,7 @@ class ML extends Component {
 
 	render() {
 		return (
-			<div className="blog jumbotron">
+			<div className="blog z-depth-5">
 				{this.Nav()}
 				{/* {this.Projects()} */}
 				{this.Content()}
@@ -70,13 +72,35 @@ class ML extends Component {
 		);
 	}
 
-	Description() {
-		return (
-			<div className="blog-description">
-				I'm going to run through interactive explinations and calculations of some machine learning fundamentals
-				I've learned. This, for my own solidification of knowledge, and for you, in case you are interested.
-			</div>
-		);
+	Description(place) {
+		switch (place) {
+			case 'main':
+				return (
+					<div className="ml-model-outer-box">
+						I'm going to run through interactive explinations and calculations of some machine learning
+						fundamentals I've learned. This, for my own solidification of knowledge, and for you, in case
+						you are interested.
+					</div>
+				);
+			case 'sklearn':
+				return (
+					<div className="blog-description">
+						<p>
+							Linear regression is the simplest learning model. It attempts to fit data into a linear
+							trend line, Y = W*X + b.
+						</p>
+						<p>
+							Where <strong>X</strong> is an <strong>(n,m)</strong> matrix with rows <strong>(n)</strong>{' '}
+							representing each feature, in this simple case, the "x" and "y" axis. and columns{' '}
+							<strong>(m)</strong> correspond with the # of data points.
+						</p>
+						<p>
+							<strong>W</strong> is a matrix of <strong>(n,h)</strong> where n is the number of features
+							in <strong>X</strong> and <strong>h</strong> is the number of nodes in the next layer.
+						</p>
+					</div>
+				);
+		}
 	}
 
 	Content() {
@@ -84,8 +108,8 @@ class ML extends Component {
 			case 'Certificates':
 				return (
 					<div>
-						<img className="ml-image-2" src={bcert} />
-						<img className="ml-image" src={cert} />
+						<img alt="Certificate from Berkeley" className="ml-image-2" src={bcert} />
+						<img alt="" className="ml-image" src={cert} />
 					</div>
 				);
 			case 'Projects':
@@ -106,10 +130,10 @@ class ML extends Component {
 		// 	OnMouseLeave: () => this.setState({ value: false })
 		// }); //
 		return (
-			<div>
-				{this.Description()}
+			<React.Fragment>
+				{this.Description('main')}
 				{this.LogGraph()}
-			</div>
+			</React.Fragment>
 		);
 	}
 
@@ -156,6 +180,7 @@ class ML extends Component {
 				train.blue.push({ x: value.x, y: value.y });
 			}
 		});
+		const popupStyle = { width: '600px' };
 		const markSeriesProps = {
 			animation: true,
 			className: 'mark-series-example',
@@ -182,10 +207,28 @@ class ML extends Component {
 		};
 		// console.log('sklearnLogPlot: ', markSeriesSklearnProps);
 		return (
-			<div className=" log-plot-outer-div">
-				<button className="log-plot-setup-divs row btn-sml btn log-button" onClick={this.CalcSklearnLog}>
-					Run Logistic Regression
-				</button>
+			<div className="blog-description log-plot-outer-div">
+				{this.Description('sklearn')}
+				<Popup
+					contentStyle={popupStyle}
+					className="button-popup"
+					trigger={
+						<button
+							className="row log-plot-setup-divs btn-sml btn log-button"
+							onClick={this.CalcSklearnLog}
+						>
+							Run python sklearn's Linear Regression
+						</button>
+					}
+					position="right center"
+					on="hover"
+				>
+					<embed
+						className="readme"
+						src="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegressionCV.html"
+					/>
+				</Popup>
+
 				<div className="log-plot-setup-divs row">
 					<div className="log-plot cl-sm-6">
 						<XYPlot
@@ -229,82 +272,107 @@ class ML extends Component {
 
 	MyLogReg() {
 		return (
-			<div className="row">
-				{/* <Alert key="1" variant='primary'>
-					This is an alert with <Alert.Link href="#">an example link</Alert.Link>. Give it a click if
-					you like.
-				</Alert> */}
+			<div className="row model-drawing-outer">
+				<div className="blog-description row ">
+					<h4 className="blog-description row">Our Model</h4>
+				</div>
 
-				<ButtonToolbar>
-					<DropdownButton
-						title={'activation (' + this.state.model.activation + ')'}
-						variant="primary"
-						id="activation"
-						key="activation"
-					>
-						{['relu', 'tanh'].map(option => (
-							<Dropdown.Item
-								eventKey={option}
-								onSelect={(eventKey, event) => {
-									console.log('eventKey: ', eventKey, 'event: ', event);
-									this.state.model.activation = eventKey;
-									this.forceUpdate();
-									console.log('model: ', this.state.model);
-								}}
-							>
-								{option}
-							</Dropdown.Item>
-						))}
-					</DropdownButton>
-					<DropdownButton
-						title={'# nodes in hidden layer (' + this.state.model.hidden_nodes + ')'}
-						variant="primary"
-						id="hidden_nodes"
-						key="hidden_nodes"
-					>
-						{[2, 3, 4, 5, 6].map(option => (
-							<Dropdown.Item
-								eventKey={option}
-								onSelect={(eventKey, event) => {
-									console.log('eventKey: ', eventKey, 'event: ', event);
-									this.state.model.hidden_nodes = eventKey;
-									this.forceUpdate();
-									console.log('model: ', this.state.model);
-								}}
-							>
-								{option}
-							</Dropdown.Item>
-						))}
-					</DropdownButton>
-					<button className="log-plot-setup-divs row btn-sml btn log-button" onClick={this.CalcMyLog}>
-						Run Logistic Regression
-					</button>
-				</ButtonToolbar>
 				<div className="row model-drawing">
-					<div className="col-sm-3 model-input-layer">
-						Input Layer
-						<div className="model-nodes" key="1">
-							x<sub>1</sub>
+					<ButtonToolbar>
+						<DropdownButton
+							title={'activation (' + this.state.model.activation + ')'}
+							variant="primary"
+							id="activation"
+							key="activation"
+							// className="model-dropdowns"
+						>
+							{['relu', 'tanh'].map(option => (
+								<Dropdown.Item
+									className="model-dropdowns"
+									eventKey={option}
+									onSelect={(eventKey, event) => {
+										console.log('eventKey: ', eventKey, 'event: ', event);
+										this.state.model.activation = eventKey;
+										this.forceUpdate();
+										console.log('model: ', this.state.model);
+									}}
+								>
+									{option}
+								</Dropdown.Item>
+							))}
+						</DropdownButton>
+						<DropdownButton
+							title={'# nodes in hidden layer (' + this.state.model.hidden_nodes + ')'}
+							variant="primary"
+							id="hidden_nodes"
+							key="hidden_nodes"
+							// className="model-dropdowns"
+						>
+							{[2, 3, 4, 5, 6].map(option => (
+								<Dropdown.Item
+									className="model-dropdowns"
+									eventKey={option}
+									onSelect={(eventKey, event) => {
+										console.log('eventKey: ', eventKey, 'event: ', event);
+										this.state.model.hidden_nodes = eventKey;
+										this.forceUpdate();
+										console.log('model: ', this.state.model);
+									}}
+								>
+									{option}
+								</Dropdown.Item>
+							))}
+						</DropdownButton>
+						<button id="activation" onClick={this.CalcMyLog}>
+							Run Logistic Regression
+						</button>
+					</ButtonToolbar>
+					<div className="row ">
+						<div className="col-sm-3 model-input-layer">
+							Input Layer
+							<div className="model-nodes" key="1">
+								x<sub>1</sub>
+							</div>
+							<div className="model-nodes" key="2">
+								x<sub>2</sub>
+							</div>
 						</div>
-						<div className="model-nodes" key="2">
-							x<sub>2</sub>
+						<div className="col-sm-3 model-hidden-layer">
+							Hidden Layer
+							<br />
+							{this.state.model.activation}
+							{this.DrawHiddenNodes()}
+						</div>
+						<div className="col-sm-3 model-output-layer">
+							Output Layer
+							<br />
+							sigmoid
+							<div className="model-nodes">Out</div>
 						</div>
 					</div>
-					<div className="col-sm-3 model-hidden-layer">
-						Hidden Layer
-						<br />
-						{this.state.model.activation}
-						{this.DrawHiddenNodes()}
-					</div>
-					<div className="col-sm-3 model-output-layer">
-						Output Layer
-						<br />
-						sigmoid
-						<div className="model-nodes">Out</div>
+					<div className=" row blog-form">
+						<div className="col-sm-3 model-hidden-layer" />
+						<div className="col-sm-3 model-hidden-layer">
+							<p>
+								z<sup>[1](i)</sup> = W<sup>[1]</sup>X<sup>(i)</sup> + b<sup>[1]</sup>
+								<br />a<sup>[1](i)</sup> = {this.state.model.activation}(z<sup>[1](i)</sup>)
+								<br />
+							</p>
+						</div>
+						<div className="col-sm-3 model-output-layer">
+							<p>
+								z<sup>[2](i)</sup> = W<sup>[2]</sup>a<sup>[1](i)</sup> + b<sup>[1]</sup>
+								<br />ŷ<sup>(i)</sup> = a<sup>[1](i)</sup> = sigmoid(z<sup>[1](i)</sup>)
+								<br />
+							</p>
+						</div>
 					</div>
 				</div>
-				<div className=" row ml-image-eq">
-					<img className="ml-image-eq" src={ml_eq} />
+				<div className="row">
+					<h4>Activation Functions</h4>
+				</div>
+				<div className="row">
+					<h4>Activation Functions</h4>
 				</div>
 			</div>
 		);
@@ -383,7 +451,7 @@ class ML extends Component {
 	Nav() {
 		return (
 			<div>
-				<Navbar className="ml-navbar" color="light" light expand="md">
+				<Navbar className="ml-navbar" color="dark" light expand="md">
 					{/* <NavbarToggler onClick={this.toggle} /> */}
 					<Collapse isOpen={this.state.isOpen} navbar>
 						<Nav className="ml-auto" navbar>
@@ -392,11 +460,13 @@ class ML extends Component {
 							</NavItem> */}
 							<NavItem>
 								<NavLink onClick={() => this.setState({ content: 'Certificates' })}>
-									Certificates
+									<font color={this.state.navFontColor}>Certificates</font>
 								</NavLink>
 							</NavItem>
 							<NavItem>
-								<NavLink onClick={() => this.setState({ content: 'Projects' })}>Projects</NavLink>
+								<NavLink onClick={() => this.setState({ content: 'Projects' })}>
+									<font color={this.state.navFontColor}>Projects</font>
+								</NavLink>
 							</NavItem>
 						</Nav>
 					</Collapse>

@@ -5,11 +5,7 @@ import {
 	NavbarBrand,
 	Nav,
 	NavItem,
-	NavLink,
-	UncontrolledDropdown,
-	DropdownToggle,
-	DropdownMenu,
-	DropdownItem,
+	NavLink
 } from 'reactstrap';
 import React, { Component } from 'react';
 
@@ -20,6 +16,7 @@ class NavBar extends Component {
 		this.toggle = this.toggle.bind(this);
 		this.state = {
 			isOpen: false,
+			fontColor : "black"
 		};
 	}
 	toggle() {
@@ -27,41 +24,33 @@ class NavBar extends Component {
 			isOpen: !this.state.isOpen,
 		});
 	}
+	
 	render() {
 		return (
-			<div>
-				<Navbar color="light" light expand="md">
-					<NavbarBrand href="/">zen-gineer</NavbarBrand>
+			<React.Fragment>
+				{/* <Navbar className="navbar bg-dark" color="dark" light expand="md"> */}
+				<Navbar className="navbar" light expand="md">
+					<NavbarBrand href="/"><font color={this.state.fontColor}>zen-gineer</font></NavbarBrand>
 					<NavbarToggler onClick={this.toggle} />
 					<Collapse isOpen={this.state.isOpen} navbar>
-						<Nav className="ml-auto" navbar>
+						<Nav  className="ml-auto" navbar>
 						<NavItem>
-								<NavLink href="/resume/" >Resume</NavLink>
+								<NavLink color="dark" className="navbar" href="/resume/" ><font color={this.state.fontColor}>Resume</font></NavLink>
 							</NavItem>
 							<NavItem>
-								<NavLink href="/Blog/" >Blog</NavLink>
+								<NavLink className="navbar" href="/Blog/" ><font color={this.state.fontColor}>Blog</font></NavLink>
 							</NavItem>
                             <NavItem>
-								<NavLink href="/GitRepo/" >GitRepo</NavLink>
+								<NavLink className="navbar" href="/GitRepo/" ><font color={this.state.fontColor}>GitRepo</font></NavLink>
 							</NavItem>
                             <NavItem>
-								<NavLink href="/ml/" onClick={console.log("woohoo!",)}>Machine Learning</NavLink>
+								<NavLink className="navbar" href="/ml/" onClick={console.log("woohoo!",)}><font color={this.state.fontColor}>Machine Learning</font></NavLink>
 							</NavItem>
-							<UncontrolledDropdown nav inNavbar>
-								<DropdownToggle nav caret>
-									Options
-								</DropdownToggle>
-								<DropdownMenu right>
-									<DropdownItem>Option 1</DropdownItem>
-									<DropdownItem>Option 2</DropdownItem>
-									<DropdownItem divider />
-									<DropdownItem>Reset</DropdownItem>
-								</DropdownMenu>
-							</UncontrolledDropdown>
+							
 						</Nav>
 					</Collapse>
 				</Navbar>
-			</div>
+			</React.Fragment>
 		);
 	}
 }

@@ -12,20 +12,22 @@ import GitRepo from './components/gitrepos';
 import NavBar from './components/navbar';
 import ML from './components/ml';
 import Resume from './components/resume';
+import HomePage from './components/home';
 
 var All = (
 
-	<div>
+	<React.Fragment>
 		<NavBar />
 		<Router>
 			<Switch>
+			<Route exact path="/" component={HomePage} />
 				<Route exact path="/Resume" component={Resume} />
 				<Route exact path="/Blog" component={BlogPosts} />
 				<Route exact path="/GitRepo" component={GitRepo} />
 				<Route exact path="/ml" component={ML} />
 			</Switch>
 		</Router>
-	</div>
+	</React.Fragment>
 
 );
 ReactDOM.render(All, document.getElementById('root'));
