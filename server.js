@@ -105,7 +105,7 @@ app.get('/api/twitter', (req, res) => {
 
 app.get('/api/blogposts', (req, res) => {
 	if (jsonData) {
-		res.json({});
+		res.json([]);
 	} else {
 		let sql = 'SELECT * from posts';
 		db.query(sql, (err, results) => {
