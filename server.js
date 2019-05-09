@@ -14,19 +14,19 @@ const jsonData = true;
 
 app.use(express.json());
 
-const db = mysql.createConnection({
-	host: 'localhost',
-	user: 'root',
-	password: sqlpass,
-	database: 'nodemysql',
-});
+// const db = mysql.createConnection({
+// 	host: 'localhost',
+// 	user: 'root',
+// 	password: sqlpass,
+// 	database: 'nodemysql',
+// });
 
-db.connect(err => {
-	if (err) {
-		console.log(err);
-	}
-	console.log('mysql connected');
-});
+// db.connect(err => {
+// 	if (err) {
+// 		console.log(err);
+// 	}
+// 	console.log('mysql connected');
+// });
 
 app.post('/api/newblogpost', (req, res) => {
 	if (jsonData) {
