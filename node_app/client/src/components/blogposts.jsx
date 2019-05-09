@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TimelineLite, CSSPlugin } from "gsap/all";
+import { TimelineLite, TweenLite, CSSPlugin } from 'gsap/all';
 // import { Button, View, Text } from 'react-native';
 // var reactNavBar = require('react-nav-bar');
 // var NavBar = reactNavBar.NavBar;
@@ -30,31 +30,40 @@ class BlogPosts extends Component {
 	// };
 
 	componentWillMount() {
-		console.log('fetching posts')
+		console.log('fetching posts');
 		fetch('/api/blogposts')
 			.then(res => res.json())
-			.then(posts => this.setState({ posts }, () => console.log('Posts fetched', posts)));
+			.then(posts =>
+				this.setState({ posts }, () => {
+					console.log('Posts fetched', posts);
+					this.myTween = TweenLite.from(
+						this.myElements,
+						0.5,
+						{ opacity: 0, y: 700, yoyo: true, repeat: 10 },
+						0.1
+					);
+				})
+			);
 	}
 
 	componentDidMount() {
 		console.log('stagger effect', this.myElements);
 		// this.myTween.staggerTo(this.myElements, 2, { y: -20, autoAlpha: 1 }, 1);
-		this.myTween.staggerTo( this.myElements , 0.5, { autoAlpha: 1, y: -20 }, 0.1);
-		this.myTween.play();
+
+		// this.myTween.play();
 	}
 
 	render() {
-		this.myTween
-			.kill()
-			.clear()
-			.pause(0);
+		// this.myTween
+		// 	.kill()
+		// 	.clear()
+		// 	.pause(0);
 		return (
 			<div className="blog jumbotron z-depth-5">
 				{this.Title()}
 				{this.Description()}
 				{this.PostGetButton()}
 				{this.state.buttonToggle === 'Create Post' ? this.Table() : this.CreatePost()}
-				
 			</div>
 		);
 	}
@@ -106,9 +115,8 @@ class BlogPosts extends Component {
 		});
 		if (this.state.buttonToggle === 'Create Post') {
 			this.componentWillMount();
-			
 		} else {
-			console.log("myTween", this.myElements[0])
+			console.log('myTween', this.myElements[0]);
 			this.myTween.restart();
 		}
 		console.log(this.state.buttonToggle);
@@ -126,13 +134,15 @@ class BlogPosts extends Component {
 					</thead>
 					<tbody>
 						{this.state.posts.map((post, index) => {
+							// const ref = React.createRef();
+							// this.myElements.push(ref);
 							// console.log(index)
-							return (<tr className="blog-table-row" 
-							key={post.id} 
-							ref={tr => (this.myElements[index]=tr)}>
-								<td className={this.state.titleCol}>{post.title}</td>
-								<td className={this.state.bodyCol}>{post.body}</td>
-							</tr>)
+							return (
+								<tr className="blog-table-row" key={post.id} ref={tr => this.myElements.push(tr)}>
+									<td className={this.state.titleCol}>{post.title}</td>
+									<td className={this.state.bodyCol}>{post.body}</td>
+								</tr>
+							);
 						})}
 					</tbody>
 				</table>
@@ -158,6 +168,42 @@ class BlogPosts extends Component {
 					This blog was meant to practice front-end / back-end developement. As well as communication with a
 					sql database. It is functional and will take your thoughts and save them for later in a post.
 				</font>
+				<button
+					className="btn gsap-btn"
+					onClick={() => {
+						console.log('play', this.myElements);
+						this.myTween.play();
+					}}
+				>
+					Play
+				</button>
+				<button
+					className="btn gsap-btn"
+					onClick={() => {
+						console.log('pause', this.myElements);
+						this.myTween.pause();
+					}}
+				>
+					Pause
+				</button>
+				<button
+					className="btn gsap-btn"
+					onClick={() => {
+						console.log('reverse', this.myElements);
+						this.myTween.reverse();
+					}}
+				>
+					Reverse
+				</button>
+				<button
+					className="btn gsap-btn"
+					onClick={() => {
+						console.log('restart', this.myElements);
+						this.myTween.restart();
+					}}
+				>
+					Restart
+				</button>
 			</div>
 		);
 	}
@@ -210,8 +256,6 @@ class BlogPosts extends Component {
 		console.log(x); // 10
 		myFunc();
 	}
-
-	
 }
 
 export default BlogPosts;

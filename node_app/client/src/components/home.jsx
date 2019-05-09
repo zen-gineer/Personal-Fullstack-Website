@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import TweenLite, { TimelineLite } from 'gsap';
 // import { Button, View, Text } from 'react-native';
-// var reactNavBar = require('react-nav-bar');
-// var NavBar = reactNavBar.NavBar;
-// var Menu = reactNavBar.Menu;
-// import { createStackNavigator, createAppContainer } from 'react-navigation'; //
-// import Request from 'superagent';
+
 
 class HomePage extends Component {
 	constructor() {
 		super();
 		this.myTween = new TimelineLite({ paused: true });
 		this.myElement = null;
-		// this.myElement = [];
 		this.state = {};
 	}
 
@@ -23,20 +18,31 @@ class HomePage extends Component {
 	// }
 
 	componentDidMount() {
-		this.myTween = TweenLite.from(this.myElement, 1, { scale:.5,y:70, x:30, opacity: 0});
-		// this.myTween.staggerTo(this.myElements, 0.5, { y: 70, autoAlpha: 1 }, 0.1);
+		// this.myTween = TweenLite.from(this.myElement, 1, { scale:.5,y:70, x:30, opacity: 0});
+		this.myTween = TweenLite.from(this.myElement, 0.5, { opacity: 0, y: 700, yoyo: true, repeat: 10 }, 0.1);
 	}
 
 	render() {
-		this.myTween
-			.kill()
-			.clear()
-			.pause(0);
+		// this.myTween
+		// 	.kill()
+		// 	.clear()
+		// 	.pause(0);
 		return (
 			<div>
-				{/* <button onClick={()=>{console.log('click', this.myElement);this.myTween.restart()}}>Restart</button> */}
-				{/* <div ref={div => this.myElement.push(div)} className="blog jumbotron z-depth-5"> */}
-				<div ref={div => this.myElement = div} className="blog jumbotron z-depth-5">
+				<button className="btn gsap-btn" onClick={() => {console.log('play', this.myTween);this.myTween.play()}}>
+							Play
+						</button>
+						<button className="btn gsap-btn" onClick={() => {console.log('pause', this.myTween);this.myTween.pause()}}>
+							Pause
+						</button>
+						<button className="btn gsap-btn" onClick={() => {console.log('reverse', this.myTween);this.myTween.reverse()}}>
+							Reverse
+						</button>
+						<button className="btn gsap-btn" onClick={() => {console.log('restart', this.myTween);this.myTween.restart()}}>
+							Restart
+						</button>
+				
+				<div ref={div => this.myElement = div} className="blog jumbotron">
 					{/* {this.Title()} */}
 					{this.Description()}
 				</div>
