@@ -67,13 +67,11 @@ def initialize_parameters(n_x, n_h, n_y):
     """
     
     np.random.seed(2) # we set up a seed so that your output matches ours although the initialization is random.
-    
-    ### START CODE HERE ### (≈ 4 lines of code)
+
     W1 = np.random.randn(n_h, n_x)*.01
     b1 = np.zeros((n_h, 1))
     W2 = np.random.randn(n_y, n_h)*.01
     b2 = np.zeros((n_y, 1))
-    ### END CODE HERE ###
     
     assert (W1.shape == (n_h, n_x))
     assert (b1.shape == (n_h, 1))
