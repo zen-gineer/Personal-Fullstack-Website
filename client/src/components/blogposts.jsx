@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
 import { TimelineLite, TweenLite, CSSPlugin } from 'gsap/all';
-// import { Button, View, Text } from 'react-native';
-// var reactNavBar = require('react-nav-bar');
-// var NavBar = reactNavBar.NavBar;
-// var Menu = reactNavBar.Menu;
-// import { createStackNavigator, createAppContainer } from 'react-navigation'; //
-// import Request from 'superagent';
 
 class BlogPosts extends Component {
 	constructor() {
@@ -16,7 +10,6 @@ class BlogPosts extends Component {
 		this.handleBodyChange = this.handleBodyChange.bind(this);
 		this.myTween = new TimelineLite({ paused: true });
 		this.myElements = [];
-		// this.cardsTween;
 		this.state = {
 			posts: [],
 			buttonToggle: 'Create Post',
@@ -25,9 +18,10 @@ class BlogPosts extends Component {
 		};
 	}
 
-	// static navigationOptions = {
-	// 	title: 'Blog',
-	// };
+	componentDidUpdate(){
+		console.log('update ', this.myElements)
+		this.myTween = this.myTween.staggerFrom(this.myElements, 0.5, { opacity: 0, y: 700}, 0.1).play();
+	}
 
 	componentWillMount() {
 		console.log('fetching posts');

@@ -1,6 +1,6 @@
 // var cors = require('cors');
 const express = require('express');
-const path = require('path')
+const path = require('path');
 const app = express();
 const mysql = require('mysql');
 var bodyParser = require('body-parser');
@@ -16,20 +16,23 @@ const isDev = process.env.NODE_ENV !== 'production';
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+var db = null
+// console.log("isDev ", isDev)
+if (isDev) {
+	db = mysql.createConnection({
+		host: 'localhost',
+		user: 'root',
+		password: sqlpass,
+		database: 'nodemysql',
+	});
 
-// const db = mysql.createConnection({
-// 	host: 'localhost',
-// 	user: 'root',
-// 	password: sqlpass,
-// 	database: 'nodemysql',
-// });
-
-// db.connect(err => {
-// 	if (err) {
-// 		console.log(err);
-// 	}
-// 	console.log('mysql connected');
-// });
+	db.connect(err => {
+		if (err) {
+			console.log(err);
+		}
+		console.log('mysql connected');
+	});
+} 
 
 app.post('/api/newblogpost', (req, res) => {
 	if (jsonData) {
@@ -107,14 +110,16 @@ app.get('/api/twitter', (req, res) => {
 });
 
 app.get('/api/blogposts', (req, res) => {
-	if (jsonData) {
-		res.json([]);
-	} else {
+	if (isDev) {
 		let sql = 'SELECT * from posts';
 		db.query(sql, (err, results) => {
 			if (err) throw err;
+			console.log('mysql results ', results)
 			res.json(results);
 		});
+		
+	} else {
+		res.json([]);
 	}
 });
 
