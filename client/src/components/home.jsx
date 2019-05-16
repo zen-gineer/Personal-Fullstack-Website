@@ -37,14 +37,14 @@ class HomePage extends Component {
 					className="hero"
 					ref={ref => (this.myElements['hero'] = ref)}
 					onMouseMove={e => {
-						this.setState({ yPos: e.clientY/window.innerHeight - .5 });
-						this.setState({ xPos: e.clientX/window.innerHeight - .5 });
-						
+						this.setState({ yPos: e.clientY / window.innerHeight - 0.5 });
+						this.setState({ xPos: e.clientX / window.innerHeight - 0.5 });
+
 						// Tilt the hero container
 						TweenLite.to(this.myElements['hero'], 0.6, {
 							rotationY: 3 * this.state.xPos,
 							rotationX: 3 * this.state.yPos,
-							ease: "Power1.easeOut",
+							ease: 'Power1.easeOut',
 							transformPerspective: 900,
 							transformOrigin: 'center',
 						});
@@ -64,15 +64,15 @@ class HomePage extends Component {
 		return (
 			<div className="top" ref={ref => (this.myElements['top'] = ref)}>
 				<div className="homeSlide slide1" ref={ref => (this.myElements['homeSlide slide1'] = ref)}>
-					<h1 ref={ref => (this.myElements['homeSlide slide1 h1'] = ref)}>What?</h1>
+					<h1 ref={ref => (this.myElements['homeSlide slide1 h1'] = ref)}>Who am I?</h1>
 				</div>
 
 				<div className="homeSlide slide2" ref={ref => (this.myElements['homeSlide slide2'] = ref)}>
-					<h1 ref={ref => (this.myElements['homeSlide slide2 h1'] = ref)}>Who?</h1>
+					<h1 ref={ref => (this.myElements['homeSlide slide2 h1'] = ref)}>What is this?</h1>
 				</div>
 
 				<div className="homeSlide slide3" ref={ref => (this.myElements['homeSlide slide3'] = ref)}>
-					<h1 ref={ref => (this.myElements['homeSlide slide3 h1'] = ref)}>What else?</h1>
+					<h1 ref={ref => (this.myElements['homeSlide slide3 h1'] = ref)}>More...</h1>
 				</div>
 			</div>
 		);
@@ -82,25 +82,39 @@ class HomePage extends Component {
 		return (
 			<div className="bottom" ref={ref => (this.myElements['bottom'] = ref)}>
 				<div className="homeSlide slide1" ref={ref => (this.myElements['bottom homeSlide slide1'] = ref)}>
-					<p ref={ref => (this.myElements['bottom homeSlide slide1 p'] = ref)}>Work is a part of life, not apart from life. So why not enjoy it?</p>
+				<p ref={ref => (this.myElements['bottom homeSlide slide2 p'] = ref)}>
+						The <span style={{ color: '#8533ff' }}>c</span>
+						<span style={{ color: '#3333ff' }}>o</span>
+						<span style={{ color: '#70dbdb' }}>l</span>
+						<span style={{ color: '#66ffb3' }}>o</span>
+						<span style={{ color: '#ffff4d' }}>r</span>
+						<span style={{ color: '#ff944d' }}>f</span>
+						<span style={{ color: '#ff4da6' }}>u</span>
+						<span style={{ color: '#a64dff' }}>l</span> world of Hindu mythology, transformed by Japanese
+						minds and distilled, <br />
+						mostly through Alan Watts, to the materialistic western world, and finally delighting a small
+						town girl from California. <span style={{ fontSize: '25px' }}>ZEN-GINEER</span>, the name I've
+						embraced on many online platforms, is descriptive of my experience of the ever evolving and
+						blending world of ideas. And is an aspiration for life and work. Creation. Optimization.
+						Actualization. The conscious or unconscious endeavors of us all.
+					</p>
+					
 				</div>
 				<div className="homeSlide slide2" ref={ref => (this.myElements['bottom homeSlide slide2'] = ref)}>
-					<p ref={ref => (this.myElements['bottom homeSlide slide2 p'] = ref)}>zen-gineer is descriptive title that represents values I've collected over the years. Engineering is a part of life. We are all creators. And Zen buddhism is the beautiful evolution of the spread of India's culture to the Asian world. A beautiful blossoming of the intermingling of cultures.</p>
-					{/* <p>
-						Inspired by{' '}
-						<a href="http://www.fixedgroup.com/" target="_blank">
-							fixedgroup.com
-						</a>{' '}
-						and{' '}
-						<a href="http://www.heartkids.co.nz/" target="_blank">
-							heartkids.co.nz
-						</a>
-						.
-					</p> */}
+				<p ref={ref => (this.myElements['bottom homeSlide slide1 p'] = ref)}>
+						An online playground to develop and showcase technical skills. <br />
+						And to communicate important things. <br/>
+					</p>
 				</div>
 
 				<div className="homeSlide slide3" ref={ref => (this.myElements['bottom homeSlide slide3'] = ref)}>
-					<p ref={ref => (this.myElements['bottom homeSlide slide3 p'] = ref)}></p>
+					<p ref={ref => (this.myElements['bottom homeSlide slide3 p'] = ref)}>
+					<a href="https://github.com/zen-gineer" className="col-sm-4">Github</a>
+					<a href="https://www.linkedin.com/" className="col-sm-4">LinkedIn</a>
+					<a href="https://resume.creddle.io/resume/27m4xt3l91n" className="col-sm-4">Resume</a>
+					<a href="https://twitter.com/zen_gineer" className="col-sm-4">Twitter</a>
+					
+					</p>
 				</div>
 			</div>
 		);
@@ -161,7 +175,7 @@ class HomePage extends Component {
 			console.log('In', slideIn.map(el => this.myElements[el]));
 			console.log('Out', slideOut.map(el => this.myElements[el]));
 			tl.set(slideIn.map(el => this.myElements[el]), { y: '100%', autoAlpha: 1 })
-				.set(slideOut.map(el => this.myElements[el]), { autoAlpha: 0 })
+				.set(slideOut.map(el => this.myElements[el]), { autoAlpha: 0 }, 0.5)
 				.to(animateOutText, 0.3, { y: '+=15px', autoAlpha: 0, ease: 'Power3.easeInOut' }, 0)
 				.to(slideOut.map(el => this.myElements[el]), 0.5, { y: '-100%', ease: 'Power3.easeInOut' }, 0)
 				.to(slideIn.map(el => this.myElements[el]), 0.5, { y: '-=100%', ease: 'Power3.easeInOut' }, '-=0.5')
@@ -198,7 +212,7 @@ class HomePage extends Component {
 			];
 			var tl = new TimelineLite();
 			tl.set(slideIn.map(el => this.myElements[el]), { y: '-100%', autoAlpha: 1 })
-				.set(slideOut.map(el => this.myElements[el]), { autoAlpha: 0 })
+				.set(slideOut.map(el => this.myElements[el]), { autoAlpha: 0 }, 0.5)
 				.to(animateOutText, 0.3, { y: '+=15px', autoAlpha: 0, ease: 'Power3.easeInOut' }, 0)
 				.to(slideOut.map(el => this.myElements[el]), 0.5, { y: '100%', ease: 'Power3.easeInOut' }, 0)
 				.to(slideIn.map(el => this.myElements[el]), 0.5, { y: '+=100%', ease: 'Power3.easeInOut' }, '-=0.5')
