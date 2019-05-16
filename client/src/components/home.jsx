@@ -72,7 +72,7 @@ class HomePage extends Component {
 				</div>
 
 				<div className="homeSlide slide3" ref={ref => (this.myElements['homeSlide slide3'] = ref)}>
-					<h1 ref={ref => (this.myElements['homeSlide slide3 h1'] = ref)}>More...</h1>
+					<h1 ref={ref => (this.myElements['homeSlide slide3 h1'] = ref)}>Find me on...</h1>
 				</div>
 			</div>
 		);
