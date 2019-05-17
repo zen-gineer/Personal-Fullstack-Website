@@ -44,13 +44,27 @@ class HomePage extends Component {
 
 						// Tilt the hero container
 						TweenLite.to(this.myElements['hero'], 0.6, {
-							rotationY: 3 * this.state.xPos,
-							rotationX: 3 * this.state.yPos,
+							rotationY: 3.5 * this.state.xPos,
+							rotationX: 3.5 * this.state.yPos,
 							ease: 'Power1.easeOut',
 							transformPerspective: 900,
 							transformOrigin: 'center',
 						});
 						// console.log(5 * this.state.xPos, 5 * this.state.yPos);
+					}}
+					// for mobile
+					onTouchMove={e => {
+						this.setState({ yPos: e.clientY / window.innerHeight - 0.5 });
+						this.setState({ xPos: e.clientX / window.innerHeight - 0.5 });
+
+						// Tilt the hero container
+						TweenLite.to(this.myElements['hero'], 0.6, {
+							rotationY: 3.5 * this.state.xPos,
+							rotationX: 3.5 * this.state.yPos,
+							ease: 'Power1.easeOut',
+							transformPerspective: 900,
+							transformOrigin: 'center',
+						});
 					}}
 				>
 					{this.Top()}
