@@ -199,7 +199,7 @@ class HomePage extends Component {
 					<li
 						className="slideNavPrev"
 						ref={ref => (this.myElements['slideNavPrev'] = ref)}
-						onClick={this.GoToPrevSlide}
+						onClick={()=>this.GoToPrevSlide()}
 					>
 						<a href="#" title="Go to previous slide">
 							<span className="ico ico-up" ref={ref => (this.myElements['ico ico-up'] = ref)}>
@@ -210,7 +210,7 @@ class HomePage extends Component {
 					<li
 						className="slideNavNext"
 						ref={ref => (this.myElements['slideNavNext'] = ref)}
-						onClick={this.GoToNextSlide}
+						onClick={()=>this.GoToNextSlide()}
 					>
 						<a href="#" title="Go to next slide">
 							<span className="ico ico-down" ref={ref => (this.myElements['ico ico-down'] = ref)}>
