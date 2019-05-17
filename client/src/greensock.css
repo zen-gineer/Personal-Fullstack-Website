@@ -120,12 +120,12 @@ p {
 	height: 100%;
 }
 
-.homeSlide.slide3 {
-	background: url(./images/sunset-top.jpg) no-repeat bottom center;
+.homeSlide.slide1 {
+	background: url(./images/sunset2-top.jpg) no-repeat bottom center;
 	background-size: cover;
 }
-.bottom .homeSlide.slide3 {
-	background: url(./images/sunset-bottom.jpg) no-repeat top center;
+.bottom .homeSlide.slide1 {
+	background: url(./images/sunset2-bottom.jpg) no-repeat top center;
 	background-size: cover;
 }
 .homeSlide.slide2 {
@@ -136,12 +136,12 @@ p {
 	background: url(./images/img_clouds-bottom-drk.jpg) no-repeat top center;
 	background-size: cover;
 }
-.homeSlide.slide1 {
-	background: url(./images/sunset2-top.jpg) no-repeat bottom center;
+.homeSlide.slide3 {
+	background: url(./images/sunset-top.jpg) no-repeat bottom center;
 	background-size: cover;
 }
-.bottom .homeSlide.slide1 {
-	background: url(./images/sunset2-bottom.jpg) no-repeat top center;
+.bottom .homeSlide.slide3 {
+	background: url(./images/sunset-bottom.jpg) no-repeat top center;
 	background-size: cover;
 }
 .homeSlide.slide4 {

@@ -108,7 +108,7 @@ class HomePage extends Component {
 					<p ref={ref => (this.myElements['bottom homeSlide slide2 p'] = ref)}>
 						An online playground to develop and showcase technical skills. <br />
 						And to communicate important things.
-						<span className="bottom-note">This website utilizes Node.js/Express backend and React front end with greensock animation. Some
+						<span className="bottom-note">This website utilizes Node.js/Express backend and React front end with greensock animation and heroku hosting. Some
 						QA testing has been developed for the first iteration. See current code{' '}
 						<a href="https://github.com/zen-gineer/Personal-Fullstack-Website" style={{ color: '#9c85ee' }}>
 							here
