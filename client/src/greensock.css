@@ -54,7 +54,7 @@ textarea {
 /* Greensock */
 body {
 	font: 16px/1.5 'Open Sans', Helvetica, Helvetica Neue, Arial, sans-serif;
-	background-color: #ffffff;
+	background-color: hsl(240, 3%, 6%);
 	color: #222222;
 }
 
@@ -85,7 +85,7 @@ h1 {
 }
 
 p {
-	color: #ffffff;
+	color: rgb(150, 142, 142);
 	font-weight: 300;
 	position: center;
 	/* bottom: 0%; */
@@ -100,6 +100,7 @@ p {
 	position: absolute;
 	height: 100%;
 	width: 100%;
+	/* border: 8px #968e8e; */
 }
 
 .top {
@@ -119,12 +120,12 @@ p {
 	height: 100%;
 }
 
-.homeSlide.slide1 {
-	background: url(./images/img_clouds-top.jpg) no-repeat bottom center;
+.homeSlide.slide3 {
+	background: url(./images/sunset-top.jpg) no-repeat bottom center;
 	background-size: cover;
 }
-.bottom .homeSlide.slide1 {
-	background: url(./images/img_clouds-bottom.jpg) no-repeat top center;
+.bottom .homeSlide.slide3 {
+	background: url(./images/sunset-bottom.jpg) no-repeat top center;
 	background-size: cover;
 }
 .homeSlide.slide2 {
@@ -135,12 +136,20 @@ p {
 	background: url(./images/img_clouds-bottom-drk.jpg) no-repeat top center;
 	background-size: cover;
 }
-.homeSlide.slide3 {
-	background: url(./images/img_clouds-red.jpg) no-repeat bottom center;
+.homeSlide.slide1 {
+	background: url(./images/sunset2-top.jpg) no-repeat bottom center;
 	background-size: cover;
 }
-.bottom .homeSlide.slide3 {
-	background: url(./images/img_clouds-bottom-red.jpg) no-repeat top center;
+.bottom .homeSlide.slide1 {
+	background: url(./images/sunset2-bottom.jpg) no-repeat top center;
+	background-size: cover;
+}
+.homeSlide.slide4 {
+	background: url(./images/sky2-top.jpg) no-repeat bottom center;
+	background-size: cover;
+}
+.bottom .homeSlide.slide4 {
+	background: url(./images/sky2-bottom.jpg) no-repeat top center;
 	background-size: cover;
 }
 
@@ -167,12 +176,39 @@ p {
 	border-width: 0 1px 1px 1px;
 }
 .bottom p {
-	font-size: 2vw;
+	/* font-size: 20px; */
 	color: #ffffff;
 	font-weight: 300;
-	/* opacity: 0.7; */
 	text-align: center;
 }
+@media all and (min-width: 400px) {
+	.bottom p {
+		font-size: 14px;
+	}
+}
+@media all and (min-width: 600px) {
+	.bottom p {
+		font-size: 20px;
+	}
+}
+
+.bottom p.bottom-note {
+	position: fixed;
+	bottom: 20px;
+	left: 30px;
+	right: 30px;
+}
+@media all and (min-width: 400px) {
+	.bottom p.bottom-note {
+		font-size: 12px;
+	}
+}
+@media all and (min-width: 600px) {
+	.bottom p.bottom-note {
+		font-size: 16px;
+	}
+}
+
 .bottom a {
 	color: #fff;
 }
