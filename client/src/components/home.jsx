@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TweenLite, { TimelineLite } from 'gsap';
+import ScrollListener from 'react-scroll-listener';
 // import { Power0 } from 'gsap/all';
 // import { Button, View, Text } from 'react-native';
 
@@ -7,6 +8,7 @@ class HomePage extends Component {
 	constructor() {
 		super();
 		this.myTween = new TimelineLite({ paused: true });
+		this.handleScroll = this.handleScroll.bind(this);
 		this.myElements = [];
 		this.state = {
 			activeSlide: ['homeSlide slide1', 'bottom homeSlide slide1'],
@@ -14,7 +16,12 @@ class HomePage extends Component {
 			slideMin: 1,
 			xPos: null,
 			yPos: null,
+			scrolling: false,
 		};
+	}
+
+	componentWillMount() {
+		window.removeEventListener('wheel', this.handleScroll);
 	}
 
 	componentDidMount() {
@@ -30,6 +37,8 @@ class HomePage extends Component {
 		console.log(this.myElements, allButActive);
 		this.myTween = TweenLite.set(allButActive, { autoAlpha: 0 });
 		TweenLite.set(this.myElements['slideNavPrev'], { autoAlpha: 0.3 });
+		window.addEventListener('wheel', this.handleScroll);
+		window.addEventListener('touchmove', this.handleScroll);
 	}
 
 	render() {
@@ -76,6 +85,24 @@ class HomePage extends Component {
 		);
 	}
 
+	handleScroll(event) {
+		// window.removeEventListener('wheel', this.handleScroll);
+		if (!this.state.scrolling) { 
+			this.setState({ scrolling: true });
+			console.log(this.state.scrolling,event);
+			if (event.deltaY > 0) {
+				this.GoToNextSlide();
+			} else {
+				this.GoToPrevSlide();
+			}
+			setTimeout(()=>{
+				this.setState({ scrolling: false })
+					console.log(this.state.scrolling)
+			}, 1500);
+		}
+		
+	}
+
 	Top() {
 		return (
 			<div className="top" ref={ref => (this.myElements['top'] = ref)}>
@@ -110,8 +137,8 @@ class HomePage extends Component {
 						<span style={{ color: '#ff944d' }}>f</span>
 						<span style={{ color: '#ff4da6' }}>u</span>
 						<span style={{ color: '#a64dff' }}>l</span> world of Hindu mythology, transformed by Japanese
-						minds and distilled, mostly through Alan Watts, to the materialistic western world of America, to finally
-						delight a small town girl from California.{' '}
+						minds and distilled, mostly through Alan Watts, to the materialistic western world of America,
+						to finally delight a small town girl from California.{' '}
 						<span style={{ fontSize: '25px' }}>ZEN-GINEER</span>, the name I've embraced on many online
 						platforms, is descriptive of my experience of the ever evolving and blending world of ideas. And
 						is an aspiration for life and work. Creation. Optimization. Actualization. The conscious or
@@ -122,17 +149,24 @@ class HomePage extends Component {
 					<p ref={ref => (this.myElements['bottom homeSlide slide2 p'] = ref)}>
 						An online playground to develop and showcase technical skills. <br />
 						And to communicate important things.
-						<span className="bottom-note">This website utilizes Node.js/Express backend and React front end with greensock animation and heroku hosting. Some
-						QA testing has been developed for the first iteration. See current code{' '}
-						<a href="https://github.com/zen-gineer/Personal-Fullstack-Website" style={{ color: 'blue' }}>
-							here
-						</a></span>
+						<span className="bottom-note">
+							This website utilizes Node.js/Express backend and React front end with greensock animation
+							and heroku hosting. Some QA testing has been developed for the first iteration. See current
+							code{' '}
+							<a
+								href="https://github.com/zen-gineer/Personal-Fullstack-Website"
+								style={{ color: 'blue' }}
+							>
+								here
+							</a>
+						</span>
 					</p>
 				</div>
 
 				<div className="homeSlide slide3" ref={ref => (this.myElements['bottom homeSlide slide3'] = ref)}>
 					<p ref={ref => (this.myElements['bottom homeSlide slide3 p'] = ref)}>
-						I'm currently working on an interactive map for current environmental and indigenous news from around the world.{' '}
+						I'm currently working on an interactive map for current environmental and indigenous news from
+						around the world.{' '}
 					</p>
 				</div>
 				<div className="homeSlide slide4" ref={ref => (this.myElements['bottom homeSlide slide4'] = ref)}>
@@ -165,7 +199,7 @@ class HomePage extends Component {
 					<li
 						className="slideNavPrev"
 						ref={ref => (this.myElements['slideNavPrev'] = ref)}
-						onClick={() => this.GoToPrevSlide()}
+						onClick={this.GoToPrevSlide}
 					>
 						<a href="#" title="Go to previous slide">
 							<span className="ico ico-up" ref={ref => (this.myElements['ico ico-up'] = ref)}>
@@ -176,7 +210,7 @@ class HomePage extends Component {
 					<li
 						className="slideNavNext"
 						ref={ref => (this.myElements['slideNavNext'] = ref)}
-						onClick={() => this.GoToNextSlide()}
+						onClick={this.GoToNextSlide}
 					>
 						<a href="#" title="Go to next slide">
 							<span className="ico ico-down" ref={ref => (this.myElements['ico ico-down'] = ref)}>
