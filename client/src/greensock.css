@@ -197,23 +197,6 @@ p {
 	}
 }
 
-/* .bottom p.bottom-note {
-	position: fixed;
-	bottom: 20px;
-	left: 30px;
-	right: 30px;
-}
-@media all and (min-width: 550px) {
-	.bottom p.bottom-note {
-		font-size: 12px;
-	}
-}
-@media all and (min-width: 700px) {
-	.bottom p.bottom-note {
-		font-size: 16px;
-	}
-} */
-
 .bottom a {
 	color: #fff;
 }
@@ -255,3 +238,25 @@ p {
 	text-decoration: none;
 	color: #ffffff;
 }
+
+@media all and (max-width: 400px) {
+	#slideNav {
+		width: 25px;
+	}
+	#slideNav li {
+		width: 25px;
+		height: 25px;
+		line-height: 25px;
+	}
+	#slideNav ul {
+		font-size: 8px;
+	}
+	#slideNav a {
+		display: block;
+		width: 25px;
+		height: 25px;
+
+	}
+}
+
+
