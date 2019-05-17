@@ -110,7 +110,7 @@ class HomePage extends Component {
 						And to communicate important things.
 						<span className="bottom-note">This website utilizes Node.js/Express backend and React front end with greensock animation and heroku hosting. Some
 						QA testing has been developed for the first iteration. See current code{' '}
-						<a href="https://github.com/zen-gineer/Personal-Fullstack-Website" style={{ color: '#9c85ee' }}>
+						<a href="https://github.com/zen-gineer/Personal-Fullstack-Website" style={{ color: 'blue' }}>
 							here
 						</a></span>
 					</p>
