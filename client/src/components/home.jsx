@@ -59,8 +59,8 @@ class HomePage extends Component {
 
 						// Tilt the hero container
 						TweenLite.to(this.myElements['hero'], 0.6, {
-							rotationY: 3.5 * this.state.xPos,
-							rotationX: 3.5 * this.state.yPos,
+							rotationY: 7 * this.state.xPos,
+							rotationX: 7 * this.state.yPos,
 							ease: 'Power1.easeOut',
 							transformPerspective: 900,
 							transformOrigin: 'center',
