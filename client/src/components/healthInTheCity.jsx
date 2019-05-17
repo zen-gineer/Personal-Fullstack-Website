@@ -64,7 +64,7 @@ class HomePage extends Component {
 		return (
 			<div className="top" ref={ref => (this.myElements['top'] = ref)}>
 				<div className="homeSlide slide1" ref={ref => (this.myElements['homeSlide slide1'] = ref)}>
-					<h1 ref={ref => (this.myElements['homeSlide slide1 h1'] = ref)}>ZEN-GINEER</h1>
+					<h1 ref={ref => (this.myElements['homeSlide slide1 h1'] = ref)}>Who am I?</h1>
 				</div>
 
 				<div className="homeSlide slide2" ref={ref => (this.myElements['homeSlide slide2'] = ref)}>
