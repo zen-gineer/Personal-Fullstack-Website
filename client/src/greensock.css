@@ -176,17 +176,22 @@ p {
 	border-width: 0 1px 1px 1px;
 }
 .bottom p {
-	font-size: 14px;
+	font-size: 12px;
 	color: #ffffff;
 	font-weight: 300;
 	text-align: center;
 }
 @media all and (min-width: 550px) {
 	.bottom p {
-		font-size: 18px;
+		font-size: 16px;
 	}
 }
 @media all and (min-width: 700px) {
+	.bottom p {
+		font-size: 18px;
+	}
+}
+@media all and (min-width: 900px) {
 	.bottom p {
 		font-size: 20px;
 	}
