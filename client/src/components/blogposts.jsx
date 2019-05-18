@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TimelineLite, TweenLite, CSSPlugin } from 'gsap/all';
+import { TimelineLite, TweenLite } from 'gsap/all';
 
 class BlogPosts extends Component {
 	constructor() {

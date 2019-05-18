@@ -115,6 +115,13 @@ class ML extends Component {
 			case 'Projects':
 				// console.log('logData', this.state.logData);
 				return this.Projects();
+			default :
+					return (
+						<div>
+						<img alt="Certificate from Berkeley" className="ml-image-2" src={bcert} />
+						<img alt="" className="ml-image" src={cert} />
+					</div>
+					);
 		}
 	}
 

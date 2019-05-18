@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import TweenLite, { TimelineLite } from 'gsap';
-import ScrollListener from 'react-scroll-listener';
+// import ScrollListener from 'react-scroll-listener';
 // import { Power0 } from 'gsap/all';
 // import { Button, View, Text } from 'react-native';
 
@@ -22,6 +22,7 @@ class HomePage extends Component {
 
 	componentWillMount() {
 		window.removeEventListener('wheel', this.handleScroll);
+		window.removeEventListener('touchmove', this.handleScroll);
 	}
 
 	componentDidMount() {
@@ -33,8 +34,6 @@ class HomePage extends Component {
 			'bottom homeSlide slide3',
 			'bottom homeSlide slide4',
 		].map(key => this.myElements[key]);
-
-		console.log(this.myElements, allButActive);
 		this.myTween = TweenLite.set(allButActive, { autoAlpha: 0 });
 		TweenLite.set(this.myElements['slideNavPrev'], { autoAlpha: 0.3 });
 		window.addEventListener('wheel', this.handleScroll);
@@ -89,7 +88,6 @@ class HomePage extends Component {
 		// window.removeEventListener('wheel', this.handleScroll);
 		if (!this.state.scrolling) { 
 			this.setState({ scrolling: true });
-			console.log(this.state.scrolling,event);
 			if (event.deltaY > 0) {
 				this.GoToNextSlide();
 			} else {
@@ -97,7 +95,6 @@ class HomePage extends Component {
 			}
 			setTimeout(()=>{
 				this.setState({ scrolling: false })
-					console.log(this.state.scrolling)
 			}, 1500);
 		}
 		
@@ -229,7 +226,6 @@ class HomePage extends Component {
 		if (activeNum === this.state.slideMin) {
 			TweenLite.set(this.myElements['slideNavPrev'], { autoAlpha: 1 });
 		}
-		// console.log('before:', activeNum);
 		if (activeNum < this.state.slideMax) {
 			var slideIn = ['homeSlide slide' + String(activeNum + 1), 'bottom homeSlide slide' + String(activeNum + 1)];
 			var animateInText = [
@@ -241,11 +237,7 @@ class HomePage extends Component {
 				'homeSlide slide' + String(activeNum) + ' h1',
 				'bottom homeSlide slide' + String(activeNum) + ' p',
 			];
-			console.log('slideOut', slideOut);
-			console.log('animateOutText', animateOutText);
 			var tl = new TimelineLite();
-			console.log('In', slideIn.map(el => this.myElements[el]));
-			console.log('Out', slideOut.map(el => this.myElements[el]));
 			tl.set(slideIn.map(el => this.myElements[el]), { y: '100%', autoAlpha: 1 })
 				.set(slideOut.map(el => this.myElements[el]), { autoAlpha: 0 }, 0.5)
 				.to(animateOutText, 0.3, { y: '+=15px', autoAlpha: 0, ease: 'Power3.easeInOut' }, 0)

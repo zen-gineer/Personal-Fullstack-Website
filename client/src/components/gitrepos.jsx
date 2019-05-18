@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Popup from 'reactjs-popup';
-import { TimelineLite, TweenLite } from 'gsap';
+import { TimelineLite	 } from 'gsap';
 // import marked from 'marked';
 // import Markdown from 'markdown-to-jsx';
 // import ReactMarkdown from 'react-markdown';
@@ -57,7 +57,6 @@ class GitRepo extends Component {
 			<div className="repo-list">
 				{this.state.repos.map(repo => {
 					console.log(this.state.readmes[repo.name]);
-					const ref = React.createRef();
 					try {
 						var readmePdf = require('../reporeadmes/' + repo.name + '.pdf');
 						return (

@@ -8,12 +8,13 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
 // import registerServiceWorker from './registerServiceWorker';
-import BlogPosts from './components/blogposts';
+// import BlogPosts from './components/blogposts';
 import GitRepo from './components/gitrepos';
-import NavBar from './components/navbar';
+// import NavBar from './components/navbar';
 import ML from './components/ml';
 import Resume from './components/resume';
 import HomePage from './components/home';
+import Health from './components/healthInTheCity';
 
 // if ('serviceWorker' in navigator) {
 // 	// console.log("service worker supported.")
@@ -33,7 +34,7 @@ var All = (
 			<Switch>
 			<Route exact path="/" component={HomePage} />
 				<Route exact path="/Resume" component={Resume} />
-				<Route exact path="/Blog" component={BlogPosts} />
+				<Route exact path="/Blog/health-in-the-city" component={Health} />
 				<Route exact path="/GitRepo" component={GitRepo} />
 				<Route exact path="/ml" component={ML} />
 			</Switch>

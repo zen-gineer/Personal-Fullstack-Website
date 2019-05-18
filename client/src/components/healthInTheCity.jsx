@@ -3,7 +3,7 @@ import TweenLite, { TimelineLite } from 'gsap';
 // import { Power0 } from 'gsap/all';
 // import { Button, View, Text } from 'react-native';
 
-class HomePage extends Component {
+class Health extends Component {
 	constructor() {
 		super();
 		this.myTween = new TimelineLite({ paused: true });
@@ -235,4 +235,4 @@ class HomePage extends Component {
 	}
 }
 
-export default HomePage;
+export default Health;
