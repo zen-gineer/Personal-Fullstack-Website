@@ -259,6 +259,33 @@ p {
 		font-size: 20px;
 	}
 }
+@media all and (max-width:500px){
+	.top-bottom {
+		overflow: auto;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		border: 1px rgba(255, 255, 255, 0.2) solid;
+		border-width: 1px 1px 0 1px;
+		background-color: hsl(0, 0%, 100%);
+	}
+	.text{
+		height:100%
+	}
+	.navbar{
+		top: 0px;
+		left: 0px;
+		right: 0px;
+	}
+	.blog-p{
+		font-size: 18px;
+		text-align: left;
+		font-weight: 130;
+		font-family: 'Open Sans', sans-serif;
+	}
+}
 
 .bottom a {
 	color: #fff;
