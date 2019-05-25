@@ -17,7 +17,7 @@ class HomePage extends Component {
 			xPos: null,
 			yPos: null,
 			scrolling: false,
-			deltaY:null
+			// deltaY:null
 		};
 	}
 
@@ -50,7 +50,6 @@ class HomePage extends Component {
 					onMouseMove={e => {
 						this.setState({ yPos: e.clientY / window.innerHeight - 0.5 });
 						this.setState({ xPos: e.clientX / window.innerHeight - 0.5 });
-						// console.log(this.myElements['blog']);
 						var normalizedDistance =
 							window.innerWidth > 500
 								? 1 -
@@ -98,7 +97,7 @@ class HomePage extends Component {
 						ref={ref => (this.myElements['blog'] = ref)}
 						// onClick={() => this.BlogSwitch()}
 					>
-						Blog {this.state.deltaY}
+						Blog 
 					</a>
 				</div>
 			</div>
@@ -108,8 +107,6 @@ class HomePage extends Component {
 	handleScroll(event) {
 		// window.removeEventListener('wheel', this.handleScroll);
 		if (!this.state.scrolling) {
-			this.setState({deltaY:event.deltaY})
-			console.log(this.state.deltaY)
 			this.setState({ scrolling: true });
 			if (event.deltaY < 0) {
 				this.GoToPrevSlide();
