@@ -65,12 +65,69 @@ h4 {
 	font-weight: 700;
 }
 
+.navbar {
+	font-family: 'Open Sans', sans-serif;
+	z-index: 100;
+	overflow: hidden;
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	right: 30px;
+	border-width: 2px;
+	border-color: #222222;
+	background-color: hsl(0, 0%, 100%);
+	/* background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 0%, rgba(34, 34, 34, 0) 100%);
+	background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(34, 34, 34, 0) 100%); */
+	box-shadow: 0px 0px 16px;
+}
 .bcg {
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
+}
+.hero {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	/* border: 8px #968e8e; */
+}
+.top {
+	overflow: hidden;
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	right: 30px;
+	bottom: 50%;
+	border: 1px rgba(255, 255, 255, 0.2) solid;
+	border-width: 1px 1px 0 1px;
+}
+.top-bottom {
+	overflow: auto;
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	right: 30px;
+	bottom: 30px;
+	border: 1px rgba(255, 255, 255, 0.2) solid;
+	border-width: 1px 1px 0 1px;
+	background-color: hsl(0, 0%, 100%);
+}
+.blog-button {
+	position: fixed;
+	bottom:50px;
+	left:50px;
+	font-size: 18px;
+	color: #ffffff;
+	width: 50px;
+	height: 50px;
+	border-radius: 25px;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	background-color: rgb(122, 119, 119, .3);
+	text-align: center;
+	padding-top: 10px;
 }
 
 h1 {
@@ -87,7 +144,6 @@ h1 {
 p {
 	color: rgb(150, 142, 142);
 	font-weight: 300;
-	position: center;
 	/* bottom: 0%; */
 	width: 80%;
 	margin: auto;
@@ -96,22 +152,29 @@ p {
 	text-align: center;
 }
 
-.hero {
-	position: absolute;
+.blog-p{
+	color: rgb(10, 9, 9);
+	width: 80%;
 	height: 100%;
-	width: 100%;
-	/* border: 8px #968e8e; */
+	margin: auto;
+	margin-top: 20px;
+	font-size: 20px;
+	text-align: left;
+	font-weight: 150;
+	font-family: 'Open Sans', sans-serif;
 }
+/* .blog-p h3, .blog-p h2 {
+	font-family: 'Merriweather Sans', sans-serif;
+} */
 
-.top {
-	overflow: hidden;
-	position: absolute;
-	top: 30px;
-	left: 30px;
-	right: 30px;
-	bottom: 50%;
-	border: 1px rgba(255, 255, 255, 0.2) solid;
-	border-width: 1px 1px 0 1px;
+.text {
+	position: relative;
+	overflow: auto;
+	height: 85%;
+	top: 56px;
+	/* left: 30px;
+	right: 30px; */
+	bottom: 20px;
 }
 
 .homeSlide {
@@ -258,5 +321,33 @@ p {
 
 	}
 }
+
+/* BLOG CSS */
+.readme-popup {
+	height: 500px;
+}
+.readme {
+	width: 100%;
+	height: 100%;
+}
+
+.blog-image {
+	width: 100%;
+	margin-left: 5%;
+	margin-right: 5%;
+	
+	margin:auto;
+	margin-top: 30px;
+	margin-bottom: 20px;
+	/* padding-top:10px;
+	padding-bottom:10px; */
+	box-shadow: 10px 10px 16px;
+}
+
+.react-vis{
+	margin: auto;
+	/* margin-bottom: 100px; */
+}
+
 
 

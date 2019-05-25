@@ -49,7 +49,11 @@ class HomePage extends Component {
 					onMouseMove={e => {
 						this.setState({ yPos: e.clientY / window.innerHeight - 0.5 });
 						this.setState({ xPos: e.clientX / window.innerHeight - 0.5 });
-
+						// console.log(this.myElements['blog']);
+						var normalizedDistance =
+							1 -
+							Math.sqrt(Math.pow(this.state.xPos + 0.4, 2) + Math.pow(this.state.yPos - 0.4, 2)) / 0.8544;
+						TweenLite.to(this.myElements['blog'], 0.2, { autoAlpha: normalizedDistance , y:`${-normalizedDistance*5}`});
 						// Tilt the hero container
 						TweenLite.to(this.myElements['hero'], 0.6, {
 							rotationY: 3.5 * this.state.xPos,
@@ -58,7 +62,7 @@ class HomePage extends Component {
 							transformPerspective: 900,
 							transformOrigin: 'center',
 						});
-						// console.log(5 * this.state.xPos, 5 * this.state.yPos);
+						// console.log(this.state.xPos, this.state.yPos);
 					}}
 					// for mobile
 					onTouchMove={e => {
@@ -79,6 +83,14 @@ class HomePage extends Component {
 					{this.Bottom()}
 					{this.Navigation()}
 					<div className="divider" />
+					<a
+						className="blog-button"
+						href="/blog/health-in-the-city"
+						ref={ref => (this.myElements['blog'] = ref)}
+						// onClick={() => this.BlogSwitch()}
+					>
+						Blog
+					</a>
 				</div>
 			</div>
 		);
@@ -86,18 +98,17 @@ class HomePage extends Component {
 
 	handleScroll(event) {
 		// window.removeEventListener('wheel', this.handleScroll);
-		if (!this.state.scrolling) { 
+		if (!this.state.scrolling) {
 			this.setState({ scrolling: true });
 			if (event.deltaY > 0) {
 				this.GoToNextSlide();
 			} else {
 				this.GoToPrevSlide();
 			}
-			setTimeout(()=>{
-				this.setState({ scrolling: false })
+			setTimeout(() => {
+				this.setState({ scrolling: false });
 			}, 1500);
 		}
-		
 	}
 
 	Top() {
@@ -196,7 +207,7 @@ class HomePage extends Component {
 					<li
 						className="slideNavPrev"
 						ref={ref => (this.myElements['slideNavPrev'] = ref)}
-						onClick={()=>this.GoToPrevSlide()}
+						onClick={() => this.GoToPrevSlide()}
 					>
 						<a href="#" title="Go to previous slide">
 							<span className="ico ico-up" ref={ref => (this.myElements['ico ico-up'] = ref)}>
@@ -207,7 +218,7 @@ class HomePage extends Component {
 					<li
 						className="slideNavNext"
 						ref={ref => (this.myElements['slideNavNext'] = ref)}
-						onClick={()=>this.GoToNextSlide()}
+						onClick={() => this.GoToNextSlide()}
 					>
 						<a href="#" title="Go to next slide">
 							<span className="ico ico-down" ref={ref => (this.myElements['ico ico-down'] = ref)}>

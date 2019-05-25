@@ -1,22 +1,38 @@
-// var cors = require('cors');
-const express = require('express');
-const path = require('path');
-const app = express();
-const mysql = require('mysql');
+// (function (exports, require, module, __filename, __dirname){})
+// immediately invoked function expression is always wrapped around each module (each file)
+// exports, require, module are all functions you can use in this file.
+// __filename, and __dirname is the name of this file and directory
+
+const express = require('express'),
+	path = require('path'),
+	app = express(),
+	mysql = require('mysql');
 var bodyParser = require('body-parser');
 const sqlpass = require('./sqlpass');
-const Twitter = require('twitter');
-const consumer_key = require('./consumer_key');
-const consumer_secret = require('./consumer_secret');
-const access_token_key = require('./access_token_key');
-const access_token_secret = require('./access_token_secret');
+const consumer_key = require('./consumer_key'),
+	consumer_secret = require('./consumer_secret'),
+	access_token_key = require('./access_token_key'),
+	access_token_secret = require('./access_token_secret');
 const spawn = require('child_process').spawn;
 const jsonData = true;
-const isDev = process.env.NODE_ENV !== 'production';
-const PORT = process.env.PORT || 5000;
+const isDev = process.env.NODE_ENV !== 'production',
+	PORT = process.env.PORT || 5000;
+
+//-- Node practice with MOSH --- --- --- ---- ---- --- ----
+const os = require('os');
+console.log(`Free Memory: ${(os.freemem() / os.totalmem()) * 100}%`);
+const EventEmitter = require('events');
+const emitter = new EventEmitter();
+
+//Register listener with callback function
+emitter.on('messageLogged', () => console.log('Listener called'));
+
+//Raise event
+emitter.emit('messageLogged');
+//-- Node practice with MOSH --- --- --- ---- ---- --- ----
 
 app.use(express.json());
-var db = null
+var db = null;
 // console.log("isDev ", isDev)
 if (isDev) {
 	db = mysql.createConnection({
@@ -32,7 +48,7 @@ if (isDev) {
 		}
 		console.log('mysql connected');
 	});
-} 
+}
 
 app.post('/api/newblogpost', (req, res) => {
 	if (jsonData) {
@@ -114,10 +130,9 @@ app.get('/api/blogposts', (req, res) => {
 		let sql = 'SELECT * from posts';
 		db.query(sql, (err, results) => {
 			if (err) throw err;
-			console.log('mysql results ', results)
+			console.log('mysql results ', results);
 			res.json(results);
 		});
-		
 	} else {
 		res.json([]);
 	}
