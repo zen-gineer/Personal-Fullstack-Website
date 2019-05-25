@@ -17,6 +17,7 @@ class HomePage extends Component {
 			xPos: null,
 			yPos: null,
 			scrolling: false,
+			deltaY:null
 		};
 	}
 
@@ -97,7 +98,7 @@ class HomePage extends Component {
 						ref={ref => (this.myElements['blog'] = ref)}
 						// onClick={() => this.BlogSwitch()}
 					>
-						Blog
+						Blog {this.state.deltaY}
 					</a>
 				</div>
 			</div>
@@ -107,11 +108,13 @@ class HomePage extends Component {
 	handleScroll(event) {
 		// window.removeEventListener('wheel', this.handleScroll);
 		if (!this.state.scrolling) {
+			this.setState({deltaY:event.deltaY})
+			console.log(this.state.deltaY)
 			this.setState({ scrolling: true });
-			if (event.deltaY > 0) {
-				this.GoToNextSlide();
-			} else {
+			if (event.deltaY < 0) {
 				this.GoToPrevSlide();
+			} else {
+				this.GoToNextSlide();
 			}
 			setTimeout(() => {
 				this.setState({ scrolling: false });
