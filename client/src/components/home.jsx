@@ -51,9 +51,17 @@ class HomePage extends Component {
 						this.setState({ xPos: e.clientX / window.innerHeight - 0.5 });
 						// console.log(this.myElements['blog']);
 						var normalizedDistance =
-							1 -
-							Math.sqrt(Math.pow(this.state.xPos + 0.4, 2) + Math.pow(this.state.yPos - 0.4, 2)) / 0.8544;
-						TweenLite.to(this.myElements['blog'], 0.2, { autoAlpha: normalizedDistance , y:`${-normalizedDistance*5}`});
+							window.innerWidth > 500
+								? 1 -
+								  Math.sqrt(Math.pow(this.state.xPos + 0.4, 2) + Math.pow(this.state.yPos - 0.4, 2)) /
+										0.8544
+								: 1 -
+								  Math.sqrt(Math.pow(this.state.xPos + 0.4, 2) + Math.pow(this.state.yPos + 0.4, 2)) /
+										0.8544;
+						TweenLite.to(this.myElements['blog'], 0.2, {
+							autoAlpha: normalizedDistance,
+							y: `${-normalizedDistance * 5}`,
+						});
 						// Tilt the hero container
 						TweenLite.to(this.myElements['hero'], 0.6, {
 							rotationY: 3.5 * this.state.xPos,
