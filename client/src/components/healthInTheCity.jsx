@@ -69,7 +69,10 @@ class Health extends Component {
 	}
 
 	Box() {
-		const popupStyle = { width: '600px' },
+		const width = window.innerWidth * 0.8,
+			height = window.innerHeight * (-this.state.yPos + 0.5);
+			console.log(height, window.innerHeight, this.state.yPos)
+		const popupStyle = { width: `${width}px`, height: `${height}px`, margin: '5px' },
 			positions = [
 				'bottom center',
 				'top left',
@@ -89,7 +92,23 @@ class Health extends Component {
 						<h2>Health in the City</h2>
 						<br />
 						<h3>A personal journey.</h3>
-						Note: The following is a work in progress. This is the kind article that is better read slow;
+						<strong>Note:</strong> Hover over the [
+						<Popup
+							contentStyle={popupStyle}
+							className="readme-popup"
+							trigger={
+								<a href="https://www.sciencedirect.com/science/article/pii/S0006322304010066">R</a>
+							}
+							positions={positions}
+							on="hover"
+						>
+							<p classname="readme">
+								<h3>I am a useful popup.</h3>
+							</p>
+						</Popup>
+						] to see a preview of the scientific articles referenced there.
+						<br />
+						<strong>Note:</strong> The following is a work in progress. This is the kind article that is better read slow;
 						and if needed not finished, rather than skimmed. Read a little and come back later. There is so
 						much information out there that is so valuable us. I have collected only a small portion of that
 						here, with links for reference and further inquiry. I highly encourage treating this as a
@@ -127,21 +146,6 @@ class Health extends Component {
 							<embed
 								className="readme"
 								src="https://www.sciencedirect.com/science/article/pii/S0006322304010066"
-							/>
-						</Popup>
-						], and taking magnesium [
-						<Popup
-							contentStyle={popupStyle}
-							className="readme-popup"
-							trigger={
-								<a href="https://www.sciencedirect.com/science/article/pii/S0306987706001034">R</a>
-							}
-							positions={positions}
-							on="hover"
-						>
-							<embed
-								className="readme"
-								src="https://www.sciencedirect.com/science/article/pii/S0306987706001034"
 							/>
 						</Popup>
 						], and taking magnesium [
@@ -204,45 +208,9 @@ class Health extends Component {
 							/>
 						</Popup>
 						] issues, or our cultures lack of sun exposure’s effect on neurodegenerative diseases [
-						<Popup
-							contentStyle={popupStyle}
-							className="readme-popup"
-							trigger={
-								<a href="https://ehjournal.biomedcentral.com/articles/10.1186/1476-069X-8-34">R</a>
-							}
-							positions={positions}
-							on="hover"
-						>
-							<embed
-								className="readme"
-								src="https://ehjournal.biomedcentral.com/articles/10.1186/1476-069X-8-34"
-							/>
-						</Popup>
-						,{' '}
-						<Popup
-							contentStyle={popupStyle}
-							className="readme-popup"
-							trigger={
-								<a href="https://jamanetwork.com/journals/jamaneurology/article-abstract/796288">R</a>
-							}
-							positions={positions}
-							on="hover"
-						>
-							<embed
-								className="readme"
-								src="https://jamanetwork.com/journals/jamaneurology/article-abstract/796288"
-							/>
-						</Popup>
-						,{' '}
-						<Popup
-							contentStyle={popupStyle}
-							className="readme-popup"
-							trigger={<a href="https://www.mdpi.com/2072-6643/8/3/142">R</a>}
-							positions={positions}
-							on="hover"
-						>
-							<embed className="readme" src="https://www.mdpi.com/2072-6643/8/3/142" />
-						</Popup>
+						<a href="https://ehjournal.biomedcentral.com/articles/10.1186/1476-069X-8-34">R</a>,{' '}
+						<a href="https://jamanetwork.com/journals/jamaneurology/article-abstract/796288">R</a>,{' '}
+						<a href="https://www.mdpi.com/2072-6643/8/3/142">R</a>
 						], its essential for us to upgrade our mental framework on what healthy is, and where to look
 						when health fails.
 						<br />
@@ -2003,26 +1971,7 @@ class Health extends Component {
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/15664505" />
 						</Popup>
-						], <strong>Smoking Cessation</strong> [
-						<Popup
-							contentStyle={popupStyle}
-							className="readme-popup"
-							trigger={
-								<a href="https://www.youtube.com/watch?v=CNMdMepQF1k&list=PL26B6CF28C5BE3E88">R</a>
-							}
-							positions={positions}
-							on="hover"
-						>
-							<embed
-								className="readme"
-								src="https://www.youtube.com/watch?v=CNMdMepQF1k&list=PL26B6CF28C5BE3E88"
-							/>
-						</Popup>
-						],
-						<strong>Laryngitis/Hoarseness</strong> [
-						<a href="https://www.youtube.com/watch?v=CNMdMepQF1k&list=PL26B6CF28C5BE3E88">R</a>] Laryngitis
-						can be hoarseness, globus, chronic cough, voice fatigue,
-						<strong>throat pain</strong>, and <strong>dysphagia</strong>., Some <strong>migraines</strong>{' '}
+						], Some <strong>migraines</strong>{' '}
 						and <strong>headaches</strong> [
 						<Popup
 							contentStyle={popupStyle}
@@ -2701,13 +2650,17 @@ class Health extends Component {
 						<br />
 						<h2>Things that help mitochondria</h2>
 						<h3>Right Diet</h3>
-						...tbc<br/>
+						...tbc
+						<br />
 						<h3>Fasting</h3>
-						...tbc<br/>
+						...tbc
+						<br />
 						<h3>Exercise (HIIT/HIST)</h3>
-						...tbc<br/>
+						...tbc
+						<br />
 						<h3>Cold and Heat Therapy</h3>
-						...tbc<br/>
+						...tbc
+						<br />
 						<h3>The Sun</h3>
 						...tbc
 						<br />
@@ -2729,7 +2682,8 @@ class Health extends Component {
 						stressed and out of place with modern chemicals, products and lifestyles. It’s my hope that we
 						deeply understand that we need the natural world, because we evolved alongside the natural
 						world, and we are the natural world.
-						<br/><br/>
+						<br />
+						<br />
 						<h3>Quick References</h3>
 						...tbc
 					</p>
