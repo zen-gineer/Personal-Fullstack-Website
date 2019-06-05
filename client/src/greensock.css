@@ -75,7 +75,7 @@ h4 {
 	right: 30px;
 	border-width: 2px;
 	border-color: #222222;
-	background-color: hsl(0, 0%, 100%);
+	background-color: hsl(0, 0%, 100%), 0;
 	/* background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 0%, rgba(34, 34, 34, 0) 100%);
 	background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(34, 34, 34, 0) 100%); */
 	box-shadow: 0px 0px 16px;
@@ -120,14 +120,29 @@ h4 {
 	left:50px;
 	font-size: 18px;
 	color: #ffffff;
-	width: 50px;
-	height: 50px;
-	border-radius: 25px;
-	-webkit-border-radius: 25px;
-	-moz-border-radius: 25px;
+	width: 80px;
+	height: 80px;
+	border-radius: 40px;
+	-webkit-border-radius: 40px;
+	-moz-border-radius: 40px;
 	background-color: rgb(122, 119, 119, .3);
 	text-align: center;
-	padding-top: 10px;
+	padding-top: 25px;
+}
+.projects-button {
+	position: fixed;
+	bottom:50px;
+	right:50px;
+	font-size: 18px;
+	color: #ffffff;
+	width: 80px;
+	height: 80px;
+	border-radius: 40px;
+	-webkit-border-radius: 40px;
+	-moz-border-radius: 40px;
+	background-color: rgb(122, 119, 119, .3);
+	text-align: center;
+	padding-top: 25px;
 }
 
 h1 {
@@ -278,6 +293,7 @@ p {
 		top: 0px;
 		left: 0px;
 		right: 0px;
+		background-color: rgb(122, 119, 119, 0);
 	}
 	.blog-p{
 		font-size: 18px;
@@ -291,11 +307,26 @@ p {
 		left:50px;
 		font-size: 18px;
 		color: #ffffff;
-		width: 50px;
-		height: 50px;
-		border-radius: 25px;
-		-webkit-border-radius: 25px;
-		-moz-border-radius: 25px;
+		width: 80px;
+		height: 80px;
+		border-radius: 40px;
+		-webkit-border-radius: 40px;
+		-moz-border-radius: 40px;
+		background-color: rgb(122, 119, 119, .3);
+		text-align: center;
+		padding-top: 10px;
+	}
+	.projects-button {
+		position: fixed;
+		top:50px;
+		right:50px;
+		font-size: 18px;
+		color: #ffffff;
+		width: 80px;
+		height: 80px;
+		border-radius: 40px;
+		-webkit-border-radius: 40px;
+		-moz-border-radius: 40px;
 		background-color: rgb(122, 119, 119, .3);
 		text-align: center;
 		padding-top: 10px;
@@ -365,9 +396,10 @@ p {
 }
 
 /* BLOG CSS */
-.readme-popup {
-	height: 500px;
-}
+/* .readme-popup {
+	/* height: 500px;
+
+} */
 .readme {
 	width: 100%;
 	height: 100%;

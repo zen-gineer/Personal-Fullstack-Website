@@ -10,15 +10,14 @@ import {
 	XYPlot,
 	XAxis,
 	YAxis,
-	VerticalGridLines,
+	// VerticalGridLines,
 	HorizontalGridLines,
 	VerticalBarSeries,
-	VerticalBarSeriesCanvas,
-	LabelSeries,
-	ChartLabel,
+	// VerticalBarSeriesCanvas,
+	// LabelSeries,
+	// ChartLabel,
 } from 'react-vis';
-// import { Power0 } from 'gsap/all';
-// import { Button, View, Text } from 'react-native';
+
 
 class Health extends Component {
 	constructor() {
@@ -31,12 +30,9 @@ class Health extends Component {
 			slideMin: 1,
 			xPos: null,
 			yPos: null,
+			position: null
 		};
 	}
-
-	// componentDidMount() {
-
-	// }
 
 	render() {
 		return (
@@ -46,12 +42,29 @@ class Health extends Component {
 					ref={ref => (this.myElements['hero'] = ref)}
 					onMouseMove={e => {
 						this.setState({ yPos: e.clientY / window.innerHeight - 0.5 });
-						this.setState({ xPos: e.clientX / window.innerHeight - 0.5 });
+						this.setState({ xPos: e.clientX / window.innerWidth - 0.5 });
 						var normalizedDistance =
 							1 -
 							Math.sqrt(Math.pow(this.state.xPos + 0.4, 2) + Math.pow(this.state.yPos - 0.4, 2)) / 0.8544;
 						// TweenLite.to(this.myElements['navbar'], 0.2, { autoAlpha: normalizedDistance , y:`${-normalizedDistance*5}`});
 						// Tilt the hero container
+						var position = '';
+						if (this.state.yPos + 0.5 < 0.333) {
+							position += 'bottom ';
+						} else if (this.state.yPos + 0.5 > 0.333 && this.state.yPos + 0.5 < 0.666) {
+							position += 'center ';
+						} else {
+							position += 'top ';
+						}
+						if (this.state.xPos + 0.5 < 0.333) {
+							position += 'left';
+						} else if (this.state.xPos + 0.5 > 0.333 && this.state.xPos + 0.5 < 0.666) {
+							position += 'center';
+						} else {
+							position += 'right';
+						}
+						// console.log(this.state.xPos, this.state.yPos, position);
+						this.setState({position: position});
 						TweenLite.to(this.myElements['hero'], 0.6, {
 							rotationY: 3 * this.state.xPos,
 							rotationX: 3 * this.state.yPos,
@@ -61,7 +74,7 @@ class Health extends Component {
 						});
 					}}
 				>
-					<Navbar ref={ref => (this.myElements['navbar'] = ref)} />
+					<Navbar fontColor="black" ref={ref => (this.myElements['navbar'] = ref)} />
 					{this.Box()}
 				</div>
 			</div>
@@ -70,21 +83,9 @@ class Health extends Component {
 
 	Box() {
 		const width = window.innerWidth * 0.8,
-			height = window.innerHeight * (-this.state.yPos + 0.5);
-			console.log(height, window.innerHeight, this.state.yPos)
-		const popupStyle = { width: `${width}px`, height: `${height}px`, margin: '5px' },
-			positions = [
-				'bottom center',
-				'top left',
-				'top right',
-				'center center',
-				'bottom right',
-				'bottom left',
-
-				'right center',
-				'left center',
-				'top center',
-			];
+			height = window.innerHeight * 0.5;
+		// console.log(height, window.innerHeight, this.state.yPos)
+		const popupStyle = { width: `${width}px`, height: `${height}px` };
 		return (
 			<div className="top-bottom" ref={ref => (this.myElements['top-bottom'] = ref)}>
 				<div className="text" ref={ref => (this.myElements['text'] = ref)}>
@@ -94,12 +95,12 @@ class Health extends Component {
 						<h3>A personal journey.</h3>
 						<strong>Note:</strong> Hover over the [
 						<Popup
-							contentStyle={popupStyle}
+							contentStyle={{ width: `300px`, height: `150px` }}
 							className="readme-popup"
 							trigger={
 								<a href="https://www.sciencedirect.com/science/article/pii/S0006322304010066">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<p classname="readme">
@@ -108,12 +109,12 @@ class Health extends Component {
 						</Popup>
 						] to see a preview of the scientific articles referenced there.
 						<br />
-						<strong>Note:</strong> The following is a work in progress. This is the kind article that is better read slow;
-						and if needed not finished, rather than skimmed. Read a little and come back later. There is so
-						much information out there that is so valuable us. I have collected only a small portion of that
-						here, with links for reference and further inquiry. I highly encourage treating this as a
-						doorway to that much bigger world, that is made freely available to us. Come back to this when
-						you have some time, and click on the links scattered throughout. <br />
+						<strong>Note:</strong> The following is a work in progress. This is the kind article that is
+						better read slow; and if needed not finished, rather than skimmed. Read a little and come back
+						later. There is so much information out there that is so valuable us. I have collected only a
+						small portion of that here, with links for reference and further inquiry. I highly encourage
+						treating this as a doorway to that much bigger world, that is made freely available to us. Come
+						back to this when you have some time, and click on the links scattered throughout. <br />
 						<br />
 						<h3>How it all started</h3>
 						I moved to San Francisco from the suburbs of Sacramento. Where I previously enjoyed plenty of
@@ -136,11 +137,12 @@ class Health extends Component {
 						emotional state after adopting a keto diet [
 						<Popup
 							contentStyle={popupStyle}
-							className="readme-popup"
+							// className="readme-popup"
 							trigger={
 								<a href="https://www.sciencedirect.com/science/article/pii/S0006322304010066">R</a>
 							}
-							positions={positions}
+							// positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -151,11 +153,11 @@ class Health extends Component {
 						], and taking magnesium [
 						<Popup
 							contentStyle={popupStyle}
-							className="readme-popup"
+							// className="readme-popup"
 							trigger={
 								<a href="https://www.sciencedirect.com/science/article/abs/pii/S1734114013710326">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -172,9 +174,10 @@ class Health extends Component {
 						malfunctioning [
 						<Popup
 							contentStyle={popupStyle}
-							className="readme-popup"
+							// contentStyle = {{ width: `700px`, height: `150px` }}
+							// className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/27215959">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/27215959" />
@@ -184,11 +187,11 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/jcmm.12088">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
-								className="readme"
+								// className="readme"
 								src="https://onlinelibrary.wiley.com/doi/full/10.1111/jcmm.12088"
 							/>
 						</Popup>
@@ -199,11 +202,11 @@ class Health extends Component {
 							trigger={
 								<a href="https://www.sciencedirect.com/science/article/pii/S0048969708004634">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
-								className="readme"
+								// className="readme"
 								src="https://www.sciencedirect.com/science/article/pii/S0048969708004634"
 							/>
 						</Popup>
@@ -241,9 +244,9 @@ class Health extends Component {
 						The EMFs found in homes, cell phones and wifi devices can damage DNA [
 						<Popup
 							contentStyle={popupStyle}
-							className="readme-popup"
+							// className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18661381?dopt=Abstract">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -254,9 +257,9 @@ class Health extends Component {
 						,{' '}
 						<Popup
 							contentStyle={popupStyle}
-							className="readme-popup"
+							// className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/17456027?dopt=Abstract">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -267,9 +270,9 @@ class Health extends Component {
 						,{' '}
 						<Popup
 							contentStyle={popupStyle}
-							className="readme-popup"
+							// className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18367817?dopt=Abstract">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -280,11 +283,11 @@ class Health extends Component {
 						], cause neuro-degeneration like autism [
 						<Popup
 							contentStyle={popupStyle}
-							className="readme-popup"
+							// className="readme-popup"
 							trigger={
 								<a href="https://www.sciencedirect.com/science/article/abs/pii/S0736574814000926">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -299,7 +302,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://www.sciencedirect.com/science/article/pii/S0928468013000370">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -312,7 +315,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="http://researcharchive.lincoln.ac.nz/handle/10182/4002">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://researcharchive.lincoln.ac.nz/handle/10182/4002" />
@@ -320,13 +323,13 @@ class Health extends Component {
 						,{' '}
 						<Popup
 							contentStyle={popupStyle}
-							positions={positions}
+							position={this.state.position}
 							trigger={
 								<a href="https://search.proquest.com/openview/aadcafe07e0ddcd8b344937579766d16/1?pq-origsite=gscholar&cbl=1176347">
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -339,7 +342,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.tandfonline.com/doi/full/10.1080/014850190924520">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -350,9 +353,9 @@ class Health extends Component {
 						,{' '}
 						<Popup
 							contentStyle={popupStyle}
-							positions={positions}
+							position={this.state.position}
 							trigger={<a href="https://www.sid.ir/En/Journal/ViewPaper.aspx?ID=65137">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.sid.ir/En/Journal/ViewPaper.aspx?ID=65137" />
@@ -360,13 +363,13 @@ class Health extends Component {
 						,{' '}
 						<Popup
 							contentStyle={popupStyle}
-							positions={positions}
+							position={this.state.position}
 							trigger={
 								<a href="http://www.scielo.br/scielo.php?pid=S1677-55382011000400002&script=sci_arttext&tlng=es">
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -377,9 +380,9 @@ class Health extends Component {
 						], can open the blood brain barrier [
 						<Popup
 							contentStyle={popupStyle}
-							positions={positions}
+							position={this.state.position}
 							trigger={<a href="http://www.piers.org/piersonline/vol1/2k5hz_p638.pdf">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://www.piers.org/piersonline/vol1/2k5hz_p638.pdf" />
@@ -393,7 +396,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -406,7 +409,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5417432/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5417432/" />
@@ -418,7 +421,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://www.biorxiv.org/content/biorxiv/early/2016/05/26/055699.full.pdf">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -435,7 +438,7 @@ class Health extends Component {
 									This study
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -452,7 +455,7 @@ class Health extends Component {
 									this study
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							{' '}
@@ -466,7 +469,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.who.int/peh-emf/publications/elf_ehc/en/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.who.int/peh-emf/publications/elf_ehc/en/" />
@@ -476,7 +479,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3561068/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3561068/" />
@@ -486,7 +489,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/23051584">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/23051584" />
@@ -496,7 +499,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/bem.20379">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://onlinelibrary.wiley.com/doi/abs/10.1002/bem.20379" />
@@ -508,7 +511,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3052250/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3052250/" />
@@ -522,7 +525,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -536,7 +539,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://emfacademy.com/5g-radiation/">here</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://emfacademy.com/5g-radiation/" />
@@ -557,7 +560,7 @@ class Health extends Component {
 										R
 									</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -577,7 +580,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://emfacademy.com/dirty-electricity-dangerous/">dirty electricity</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://emfacademy.com/dirty-electricity-dangerous/" />
@@ -595,7 +598,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -608,7 +611,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://dspace.kpfu.ru/xmlui/handle/net/137628">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://dspace.kpfu.ru/xmlui/handle/net/137628" />
@@ -618,7 +621,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="http://sammilham.com/ADHD%20pdf.pdf">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://sammilham.com/ADHD%20pdf.pdf" />
@@ -628,7 +631,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="http://electricalpollution.com/documents/WWcolour.pdf">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://electricalpollution.com/documents/WWcolour.pdf" />
@@ -638,7 +641,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.tandfonline.com/doi/abs/10.3109/15368378.2012.743909">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -655,7 +658,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://selfhacked.com/blog/emfs-bad-unhealthy-health-effects-emfs/">here</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -668,7 +671,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="http://emfwise.com/">here</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://emfwise.com/" />
@@ -678,7 +681,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://emfacademy.com/emf-radiation-everyday-life/">Here's</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://emfacademy.com/emf-radiation-everyday-life/" />
@@ -688,7 +691,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://emfacademy.com/emf-radiation-everyday-life/">EMF meter</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://emfacademy.com/emf-radiation-everyday-life/" />
@@ -698,7 +701,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://emfacademy.com/emf-radiation-everyday-life/">this one</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://emfacademy.com/emf-radiation-everyday-life/" />
@@ -708,7 +711,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://emfacademy.com/emf-radiation-everyday-life/">This one</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://emfacademy.com/emf-radiation-everyday-life/" />
@@ -736,7 +739,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://emfacademy.com/emf-radiation-everyday-life/">Martin Pall</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://emfacademy.com/emf-radiation-everyday-life/" />
@@ -752,7 +755,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -770,7 +773,7 @@ class Health extends Component {
 									gene transcription
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -787,7 +790,7 @@ class Health extends Component {
 									neurotransmitter release
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -804,7 +807,7 @@ class Health extends Component {
 									neurite outgrowth
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -821,7 +824,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -838,7 +841,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -855,7 +858,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -873,7 +876,7 @@ class Health extends Component {
 								trigger={
 									<a href="https://www.emfanalysis.com/new-paradigm-emf-science/">emfanalysis</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.emfanalysis.com/new-paradigm-emf-science/" />
@@ -889,7 +892,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -906,7 +909,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -927,7 +930,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -944,7 +947,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -957,7 +960,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.physiology.org/doi/full/10.1152/physrev.1998.78.2.547">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -974,7 +977,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -991,7 +994,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1008,7 +1011,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1027,7 +1030,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://www.sciencedirect.com/science/article/pii/S089662731400244X">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1053,7 +1056,7 @@ class Health extends Component {
 										Slides
 									</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -1100,7 +1103,7 @@ class Health extends Component {
 											dirty electricity filter
 										</a>
 									}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1118,7 +1121,7 @@ class Health extends Component {
 									trigger={
 										<a href="http://nootropicsdepot.com/magnesium-l-threonate-powder/">Magnesium</a>
 									}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1132,7 +1135,7 @@ class Health extends Component {
 									contentStyle={popupStyle}
 									className="readme-popup"
 									trigger={<a href="https://wellnessmama.com/54128/magnesium-deficiency/">R</a>}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1152,7 +1155,7 @@ class Health extends Component {
 											Here's
 										</a>
 									}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1168,7 +1171,7 @@ class Health extends Component {
 									contentStyle={popupStyle}
 									className="readme-popup"
 									trigger={<a href="https://zachbushmd.com/">Zach Bush</a>}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed className="readme" src="https://zachbushmd.com/" />
@@ -1182,7 +1185,7 @@ class Health extends Component {
 									contentStyle={popupStyle}
 									className="readme-popup"
 									trigger={<a href="https://www.wikiwand.com/en/Adenosine_triphosphate">ATP</a>}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1204,7 +1207,7 @@ class Health extends Component {
 											Lower the NO/ONOO{' '}
 										</a>
 									}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1222,7 +1225,7 @@ class Health extends Component {
 											R
 										</a>
 									}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1237,7 +1240,7 @@ class Health extends Component {
 									trigger={
 										<a href="https://www.gardenoflife.com/content/product/raw-coq10/">COQ10</a>
 									}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1254,7 +1257,7 @@ class Health extends Component {
 											unbiquinol
 										</a>
 									}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1267,7 +1270,7 @@ class Health extends Component {
 									contentStyle={popupStyle}
 									className="readme-popup"
 									trigger={<a href="https://selfhacked.com/blog/coenzyme-q10-ubiquinol/">R</a>}
-									positions={positions}
+									position={this.state.position}
 									on="hover"
 								>
 									<embed
@@ -1286,7 +1289,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://ehjournal.biomedcentral.com/articles/10.1186/1476-069X-8-34">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1301,7 +1304,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://jamanetwork.com/journals/jamaneurology/article-abstract/796288">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1314,7 +1317,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.mdpi.com/2072-6643/8/3/142">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.mdpi.com/2072-6643/8/3/142" />
@@ -1326,7 +1329,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://selfhacked.com/blog/35proven-health-benefits-vitamin-d-part-1/">R</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1342,7 +1345,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://selfhacked.com/blog/red-light-therapy-benefits/">myriad benefits</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://selfhacked.com/blog/red-light-therapy-benefits/" />
@@ -1362,7 +1365,7 @@ class Health extends Component {
 									here
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1375,7 +1378,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://selfhacked.com/blog/sunbathing-winter-nyc/">here</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://selfhacked.com/blog/sunbathing-winter-nyc/" />
@@ -1387,7 +1390,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://selfhacked.com/blog/chronotherapy/">here</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://selfhacked.com/blog/chronotherapy/" />
@@ -1399,7 +1402,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://jama.jamanetwork.com/article.aspx?articleid=2441244">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1412,7 +1415,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4451516/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4451516/" />
@@ -1439,7 +1442,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://selfhacked.com/blog/my-review-of-lllt/">article</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://selfhacked.com/blog/my-review-of-lllt/" />
@@ -1450,7 +1453,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/16706694">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/16706694" />
@@ -1460,7 +1463,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC522143/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC522143/" />
@@ -1470,7 +1473,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="http://www.behavioralandbrainfunctions.com/content/5/1/46">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://www.behavioralandbrainfunctions.com/content/5/1/46" />
@@ -1480,7 +1483,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="http://www.behavioralandbrainfunctions.com/content/5/1/46">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://www.behavioralandbrainfunctions.com/content/5/1/46" />
@@ -1490,7 +1493,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/16706694">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/16706694" />
@@ -1500,7 +1503,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/25024832">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/25024832" />
@@ -1510,7 +1513,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/25061034">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/25061034" />
@@ -1520,7 +1523,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="http://arthritis-research.com/content/15/5/120">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://arthritis-research.com/content/15/5/120" />
@@ -1530,7 +1533,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/22747309">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/22747309" />
@@ -1540,7 +1543,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18425909">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/18425909" />
@@ -1550,7 +1553,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/19913903">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/19913903" />
@@ -1560,7 +1563,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/22718472">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/22718472" />
@@ -1570,7 +1573,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3065857/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3065857/" />
@@ -1580,7 +1583,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3065857/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3065857/" />
@@ -1590,7 +1593,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.sciencedaily.com/releases/2014/05/140528150559.htm">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1603,7 +1606,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/25072362">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/25072362" />
@@ -1613,7 +1616,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18251609?dopt=Citation">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1627,7 +1630,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18251609?dopt=Citation">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1640,7 +1643,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/22615511">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/22615511" />
@@ -1650,7 +1653,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24991808">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24991808" />
@@ -1660,7 +1663,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/16800001">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/16800001" />
@@ -1670,7 +1673,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/19399356">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/19399356" />
@@ -1680,7 +1683,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24049929">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24049929" />
@@ -1690,7 +1693,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24801056">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24801056" />
@@ -1700,7 +1703,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/22582845">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/22582845" />
@@ -1710,7 +1713,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/21077725">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/21077725" />
@@ -1724,7 +1727,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1737,7 +1740,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/20932182">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/20932182" />
@@ -1747,7 +1750,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/22827550">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/22827550" />
@@ -1757,7 +1760,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24319484">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24319484" />
@@ -1767,7 +1770,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24026991">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24026991" />
@@ -1778,7 +1781,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/22189647">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/22189647" />
@@ -1788,7 +1791,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/15493034">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/15493034" />
@@ -1798,7 +1801,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/15954824">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/15954824" />
@@ -1808,7 +1811,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18588438">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/18588438" />
@@ -1818,7 +1821,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24527959">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24527959" />
@@ -1828,7 +1831,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="http://www.hindawi.com/journals/tswj/2013/596076/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="http://www.hindawi.com/journals/tswj/2013/596076/" />
@@ -1838,7 +1841,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/25030898">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/25030898" />
@@ -1849,7 +1852,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/23626925">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/23626925" />
@@ -1859,7 +1862,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/22714676">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/22714676" />
@@ -1869,7 +1872,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24030687">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24030687" />
@@ -1880,7 +1883,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/19534794/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/19534794/" />
@@ -1890,7 +1893,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/23946409">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/23946409" />
@@ -1900,7 +1903,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24994540">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24994540" />
@@ -1910,7 +1913,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18602833?dopt=Citation">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1923,7 +1926,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/25070591">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/25070591" />
@@ -1933,7 +1936,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18510742?dopt=Citation">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -1946,7 +1949,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24905929">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24905929" />
@@ -1956,7 +1959,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/19882488">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/19882488" />
@@ -1966,18 +1969,17 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/15664505">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/15664505" />
 						</Popup>
-						], Some <strong>migraines</strong>{' '}
-						and <strong>headaches</strong> [
+						], Some <strong>migraines</strong> and <strong>headaches</strong> [
 						<Popup
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/12811613">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/12811613" />
@@ -1987,7 +1989,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/16613009">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/16613009" />
@@ -1997,7 +1999,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/9865208">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/9865208" />
@@ -2007,7 +2009,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18172370?dopt=Citation">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -2020,7 +2022,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18305441?dopt=Citation">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -2033,7 +2035,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24725989">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24725989" />
@@ -2043,7 +2045,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/17920925?dopt=Citation">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -2056,7 +2058,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24974175">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24974175" />
@@ -2066,7 +2068,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24792475">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24792475" />
@@ -2076,7 +2078,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2830167/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2830167/" />
@@ -2086,7 +2088,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/15674998/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/15674998/" />
@@ -2096,7 +2098,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/17943086?dopt=Citation">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -2109,7 +2111,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3972560/">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3972560/" />
@@ -2120,7 +2122,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/24724146">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/24724146" />
@@ -2130,7 +2132,7 @@ class Health extends Component {
 							contentStyle={popupStyle}
 							className="readme-popup"
 							trigger={<a href="https://en.wikipedia.org/wiki/Photodynamic_therapy">R</a>}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://en.wikipedia.org/wiki/Photodynamic_therapy" />
@@ -2158,7 +2160,7 @@ class Health extends Component {
 							trigger={
 								<a href="https://en.wikipedia.org/wiki/Photodynamic_therapy">mitochondrial theory</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed className="readme" src="https://en.wikipedia.org/wiki/Photodynamic_therapy" />
@@ -2192,7 +2194,7 @@ class Health extends Component {
 									R
 								</a>
 							}
-							positions={positions}
+							position={this.state.position}
 							on="hover"
 						>
 							<embed
@@ -2220,7 +2222,7 @@ class Health extends Component {
 										R
 									</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2247,7 +2249,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://academic.oup.com/cardiovascres/article/88/2/241/345999">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2262,7 +2264,7 @@ class Health extends Component {
 								trigger={
 									<a href="https://www.sciencedirect.com/science/article/pii/S0163725811000854">R</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2286,7 +2288,7 @@ class Health extends Component {
 										R
 									</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2304,7 +2306,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/ana.20624">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2319,7 +2321,7 @@ class Health extends Component {
 								trigger={
 									<a href="https://www.sciencedirect.com/science/article/pii/S1567724907001122">R</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2334,7 +2336,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://selfhacked.com/blog/hydrogen-water/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://selfhacked.com/blog/hydrogen-water/" />
@@ -2346,7 +2348,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://selfhacked.com/blog/hydrogen-water/">resveratrol</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://selfhacked.com/blog/hydrogen-water/" />
@@ -2358,7 +2360,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2896035/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2896035/" />
@@ -2368,7 +2370,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/23831960">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/23831960" />
@@ -2378,7 +2380,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/17138809/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/17138809/" />
@@ -2388,7 +2390,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4707222/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4707222/" />
@@ -2398,7 +2400,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/3368532">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/3368532" />
@@ -2408,7 +2410,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/17138809/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/17138809/" />
@@ -2418,7 +2420,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/15600135">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/15600135" />
@@ -2428,7 +2430,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/14998915">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/14998915" />
@@ -2438,7 +2440,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2367001/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2367001/" />
@@ -2448,7 +2450,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/26766547">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/26766547" />
@@ -2458,7 +2460,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/18625458">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/18625458" />
@@ -2468,7 +2470,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4101992/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4101992/" />
@@ -2478,7 +2480,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/3368532">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/3368532" />
@@ -2488,7 +2490,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/3368532">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/3368532" />
@@ -2502,7 +2504,7 @@ class Health extends Component {
 										R
 									</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2515,7 +2517,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040018/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040018/" />
@@ -2525,7 +2527,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.ncbi.nlm.nih.gov/pubmed/20966550/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://www.ncbi.nlm.nih.gov/pubmed/20966550/" />
@@ -2535,7 +2537,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://selfhacked.com/blog/ubiquinol-benefits/">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://selfhacked.com/blog/ubiquinol-benefits/" />
@@ -2545,7 +2547,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://selfhacked.com/blog/alzheimer/">this</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed className="readme" src="https://selfhacked.com/blog/alzheimer/" />
@@ -2571,7 +2573,7 @@ class Health extends Component {
 										impulsivity
 									</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2586,7 +2588,7 @@ class Health extends Component {
 								trigger={
 									<a href="https://www.sciencedirect.com/science/article/pii/S0006322301011738">R</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2601,7 +2603,7 @@ class Health extends Component {
 								trigger={
 									<a href="https://www.sciencedirect.com/science/article/pii/S0149763499000603">R</a>
 								}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed
@@ -2632,7 +2634,7 @@ class Health extends Component {
 								contentStyle={popupStyle}
 								className="readme-popup"
 								trigger={<a href="https://www.futuremedicine.com/doi/abs/10.2217/nmt.14.14">R</a>}
-								positions={positions}
+								position={this.state.position}
 								on="hover"
 							>
 								<embed

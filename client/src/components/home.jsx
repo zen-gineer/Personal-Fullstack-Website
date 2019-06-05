@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TweenLite, { TimelineLite } from 'gsap';
+import Navbar from './navbar';
 // import ScrollListener from 'react-scroll-listener';
 // import { Power0 } from 'gsap/all';
 // import { Button, View, Text } from 'react-native';
@@ -49,19 +50,8 @@ class HomePage extends Component {
 					ref={ref => (this.myElements['hero'] = ref)}
 					onMouseMove={e => {
 						this.setState({ yPos: e.clientY / window.innerHeight - 0.5 });
-						this.setState({ xPos: e.clientX / window.innerHeight - 0.5 });
-						var normalizedDistance =
-							window.innerWidth > 500
-								? 1 -
-								  Math.sqrt(Math.pow(this.state.xPos + 0.4, 2) + Math.pow(this.state.yPos - 0.4, 2)) /
-										0.8544
-								: 1 -
-								  Math.sqrt(Math.pow(this.state.xPos + 0.4, 2) + Math.pow(this.state.yPos + 0.4, 2)) /
-										0.8544;
-						TweenLite.to(this.myElements['blog'], 0.2, {
-							autoAlpha: normalizedDistance,
-							y: `${-normalizedDistance * 5}`,
-						});
+						this.setState({ xPos: e.clientX / window.innerWidth - 0.5 });
+					
 						// Tilt the hero container
 						TweenLite.to(this.myElements['hero'], 0.6, {
 							rotationY: 3.5 * this.state.xPos,
@@ -70,7 +60,7 @@ class HomePage extends Component {
 							transformPerspective: 900,
 							transformOrigin: 'center',
 						});
-						// console.log(this.state.xPos, this.state.yPos);
+						console.log(this.state.xPos, this.state.yPos);
 					}}
 					// for mobile
 					onTouchMove={e => {
@@ -87,18 +77,11 @@ class HomePage extends Component {
 						});
 					}}
 				>
+					<Navbar fontColor="white" ref={ref => (this.myElements['navbar'] = ref)} />
 					{this.Top()}
 					{this.Bottom()}
 					{this.Navigation()}
 					<div className="divider" />
-					<a
-						className="blog-button"
-						href="/blog/health-in-the-city"
-						ref={ref => (this.myElements['blog'] = ref)}
-						// onClick={() => this.BlogSwitch()}
-					>
-						Blog 
-					</a>
 				</div>
 			</div>
 		);
